@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>I-Smart | Dashboard | LogIn</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'frontend/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  {% load static %}
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'frontend/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'frontend/dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Favicon -->
+  {% load static %}
+  <link rel="shortcut icon" type="image" href="{% static 'frontend/dist/img/AdminLTELogo.png' %}">
+</head>
+<body class="hold-transition login-page" style="background-image: url('{% static "frontend/dist/img/bg_login.jpg" %}');">
+<div class="login-box">
+  <div class="login-logo" style="background-color:#ffffff;">
+    <b><b>I-</b>Smart</b>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg"><b>Sign in to start your session</b></p>
+
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input name="username" type="text" class="form-control" placeholder="UserName">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input name="password" type="password" class="form-control" placeholder="Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="remember">
+              <label for="remember">
+                Remember Me
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Sign In    <i class="fas fa-sign-in-alt"></i></button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+    </div>
+    <!--<div>
+      {% for message in messages %}
+      <h4><strong><font color="red">{{message}}</font></strong><h4>
+      {% endfor %}
+    </div>-->
+    <!-- /.error message -->
+
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+{% load static %}
+<!-- jQuery -->
+<script src="{% static 'frontend/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'frontend/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'frontend/dist/js/adminlte.min.js' %}"></script>
+
+</body>
+</html>

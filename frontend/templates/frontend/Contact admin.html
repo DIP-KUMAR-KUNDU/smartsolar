@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Administrator</title>
+</head>
+<body>
+    
+
+    <h1>Contact Administrator:</h1>
+
+    <label for="problems" >Problem Regarding:- </label>
+    
+    <select  id="problems" >
+        <option value="option1">Option1</option>
+        <option value="option2">Option2</option>
+        <option value="option3">Option3</option>
+        <option value="option4">Option4</option>
+
+    </select>
+
+    <br><br>
+    <label for="problems">Please mention the problem:</label>
+    <br><br>
+    <textarea name="" id="problem desc" placeholder="Enter your problem here" ></textarea>
+
+    <br><br>
+    <input type="submit" value="Submit Problem" id="btn">
+
+
+    <script>
+
+        var submit = document.getElementById('btn');
+
+        submit.addEventListener('click',senddata);
+
+        function senddata(e){
+            var data = document.getElementById('problem desc').value;
+
+            e.preventDefault();
+            console.log(10);
+            console.log(data);
+
+            
+        }
+
+    </script>
+
+</body>
+</html>
