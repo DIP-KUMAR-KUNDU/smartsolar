@@ -1,0 +1,323 @@
+<head>
+    <style>
+        @page {
+            size: a4 portrait;
+
+            @frame header_frame {
+                /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 50pt;
+                width: 512pt;
+                top: 50pt;
+                height: 40pt;
+            }
+
+            @frame content_frame {
+                /* Content Frame */
+                left: 50pt;
+                width: 512pt;
+                top: 90pt;
+                height: 632pt;
+            }
+
+            @frame footer_frame {
+                /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 50pt;
+                width: 512pt;
+                top: 772pt;
+                height: 20pt;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+        <h2>Solar Feasibility Site Survey</h2>
+    </div>
+
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">(c) - page <pdf:pagenumber>
+            of <pdf:pagecount>
+    </div>
+
+    <!-- HTML Content -->
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Site ID</td>
+                    <td>Site Name</td>
+                    <td>Region</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{Site_ID}}</td>
+                    <td>{{Site_Name}}</td>
+                    <td>{{Site_Region}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <td>Date</td>
+                    <td>Time</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ visited|date:"d/m/Y" }}</td>
+                    <td>{{ visited|date:"h:m" }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><br>
+    <hr>
+    <div>
+        <div>
+            <h3>Site Coordinate</h3>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Latitude</td>
+                    <td>longitude</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{Site_Latitute}}</td>
+                    <td>{{Site_Longitude}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><br>
+    <hr>
+    <div>
+        <div>
+            <b>Contractor:</b> <u>{{Contractor}}</u>
+        </div>
+        <div>
+            <b>Names of Contractor Rep:</b> <u>{{Names_of_Contractor_Rep}}</u>
+        </div>
+        <div>
+            <b>Contact of Contractor Rep:</b> <u>{{Contact_of_Contractor_Rep}}</u>
+        </div>
+    </div><br>
+    <hr>
+    <div>
+        <div>
+            <h3>1. Site Information</h3>
+        </div>
+        <div>
+            <b>1.1 DC System on site?</b>
+            {{DC_System}}
+        </div>
+        <div>
+            <b>1.2 DC System brand and size</b>
+            {{DC_System_brand}} , {{DC_System_size}}
+        </div>
+        <div>
+            <b>1.3 Is space available inside the DC Cabinet for Solar MPPT Controller to be installed at the power
+                compartment section</b>
+            {{space_availablity}}
+        </div>
+        <div>
+            <b>1.4 Measure and record the available space for the MPPT controller in the DC cabinet</b>
+            <div>
+                Length: {{MPPT_len}} meter
+            </div>
+            <div>
+                Height: {{MPPT_hig}} meter
+            </div>
+        </div>
+        <div>
+            <b>1.5 Is there any tall structure, tree or building higher than the site fence that can cause possible
+                shading?</b>
+            {{tall_structure}}
+        </div>
+        <div>
+            <b>1.6 If Yes indicate or name the structure type(s)</b>
+            {{structure_type}}
+        </div>
+        <div>
+            <b>1.7 If yes, specify the height and the distance of the structure from the site fence </b>
+            <b>Height of structure AGL </b>
+            {{structure_hig}}
+            <b>Distance from fence </b>
+            {{structure_dist}}
+        </div>
+        <div>
+            <b>1.8 Record distance from Shed leg on which DB will be fix to the DC Cabinet in meters</b>
+            {{cabinet_dist}}
+        </div>
+        <div>
+            <b>Any comment:</b>
+            <div>
+                {{cmnt}}
+            </div>
+        </div>
+    </div><br>
+    <hr>
+    <div>
+        <div>
+            <h3>2. DC Supply parameter</h3>
+        </div>
+        <div>
+            <b>2.1 System Voltage: </b>
+            {{sys_volt}} Volt
+        </div>
+        <div>
+            <b>2.2 Load Current_1: </b>
+            {{sys_cur1}} Amp
+        </div>
+        <div>
+            <b>2.3 Load Current_2: </b>
+            {{sys_cur2}} Amp
+        </div>
+        <div>
+            <b>2.4 Load Current_3: </b>
+            {{sys_cur3}} Amp
+        </div>
+        <div>
+            <b>2.5 Load Current_4: </b>
+            {{sys_cur4}} Amp
+        </div>
+    </div><br>
+    <hr>
+    <div>
+        <div>
+            <h3>3. Site Dimension Detail</h3>
+        </div>
+        <div>
+            <h4><u>Site Dimension</u></h4>
+            <div>
+                <b>Front side (Gate side):</b>
+                {{front}} meter
+            </div>
+            <div>
+                <b>Right Side (When facing the gate from outside the site):</b>
+                {{right}} meter
+            </div>
+            <div>
+                <b>Back Side (opposite the gate side):</b>
+                {{back}} meter
+            </div>
+            <div>
+                <b>Left Side (When facing the gate from outside the site):</b>
+                {{left}} meter
+            </div>
+        </div>
+        <div>
+            <h4><u>Available space around the tower</u></h4>
+            <div>
+                <b>Distance from tower Leg/face or monopole to front side of fence:</b>
+                {{front_dist}} meter
+            </div>
+            <div>
+                <b>Distance from tower Leg/face or monopole to Right side of fence:</b>
+                {{right_dist}} meter
+            </div>
+            <div>
+                <b>Distance from tower Leg/face or monopole to Back side of fence:</b>
+                {{back_dist}} meter
+            </div>
+            <div>
+                <b>Distance from tower Leg/face or monopole to Left side of fence:</b>
+                {{left_dist}} meter
+            </div>
+        </div>
+        <div>
+            <h4><u>Propose location for Solar shed (Option_1)</u></h4>
+            <div>
+                <b>Length of Side_A:</b>
+                {{A1}} meter
+            </div>
+            <div>
+                <b>Length of Side_B:</b>
+                {{B1}} meter
+            </div>
+            <div>
+                <b>Length of Side_C:</b>
+                {{C1}} meter
+            </div>
+            <div>
+                <b>Length of Side_D:</b>
+                {{D1}} meter
+            </div>
+        </div>
+        <div>
+            <h4><u>Propose location for Solar shed (Option_2) </u>(<em>Optional</em>)</h4>
+            <div>
+                <b>Length of Side_A:</b>
+                {{A2}} meter
+            </div>
+            <div>
+                <b>Length of Side_B:</b>
+                {{B2}} meter
+            </div>
+            <div>
+                <b>Length of Side_C:</b>
+                {{C2}} meter
+            </div>
+            <div>
+                <b>Length of Side_D:</b>
+                {{D2}} meter
+            </div>
+        </div>
+    </div><br>
+    <hr>
+    <div>
+        <div>
+            <h3>4. Geographical information</h3>
+        </div>
+        <div>
+            <div>
+                <b>Sketch block diagram of site layout:</b>
+                <div>
+                    <img src="/home/sudhanya/Dropbox/Python_prog/Web Development/ismart-solar/smartsolar{{block_diagram.url}}" alt="">
+                </div>
+            </div>
+            <div>
+                <b>Site tower and its shade at every 20 minutes for 2 hours Plot:</b>
+                <div>
+                    <img src="/home/sudhanya/Dropbox/Python_prog/Web Development/ismart-solar/smartsolar{{shade_diagram.url}}" alt="">
+                </div>
+            </div>
+            <div>
+                <b> Your prefered PV shed location on the site sketch:</b>
+                <div>
+                    <img src="/home/sudhanya/Dropbox/Python_prog/Web Development/ismart-solar/smartsolar{{prefered_location.url}}" alt="">
+                </div>
+            </div>
+            <div>
+                <b>Locality map ofthe location indicating available roads and any major land marks sketch:</b>
+                <div>
+                    <img src="/home/sudhanya/Dropbox/Python_prog/Web Development/ismart-solar/smartsolar{{map_draw.url}}" alt="">
+                </div>
+            </div>
+        </div>
+    </div><br>
+    <hr>
+    <div>
+        <div>
+            <h3>5. Supporting images</h3>
+        </div>
+        <div>
+            {% for extra_img in extra_imgs %}
+            <div>
+                <b>{{extra_img.supporting_images_caption}}:</b>
+                <div>
+                    <img src="/home/sudhanya/Dropbox/Python_prog/Web Development/ismart-solar/smartsolar{{extra_img.supporting_images.url}}" alt="">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div><br>
+</body>
+
+</html>

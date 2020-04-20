@@ -33,46 +33,132 @@ def tssViewSmart(request):
     return render(request, 'frontend/tss-view.html', {"sitevisit": SiteVisit.objects.all()})
 
 
+# def tssViewSmartPDF(request):
+#     try:
+#         from io import BytesIO
+#         from reportlab.pdfgen import canvas
+#         sitevisitobj = SiteVisit.objects.get(id=request.GET.get('id'))
+#         site = sitevisitobj.site
+#         response = HttpResponse(content_type='application/pdf')
+#         response['Content-Disposition'] = 'attachment; filename="' + \
+#             str(site.site_id) + '_' + \
+#             str(sitevisitobj.visited.strftime("%d_%m_%Y")) + '.pdf"'
+#         buffer = BytesIO()
+#         p = canvas.Canvas(buffer)
+#         # Start writing the PDF here
+#         ind = 800
+#         for k, v in site.__dict__.items():
+#             p.drawString(20, ind, str(k) + ': ' + str(v))
+#             ind -= 15
+#         for k, v in sitevisitobj.contract.__dict__.items():
+#             p.drawString(20, ind, str(k) + ': ' + str(v))
+#             ind -= 15
+#         for k, v in sitevisitobj.details.__dict__.items():
+#             p.drawString(20, ind, str(k) + ': ' + str(v))
+#             ind -= 15
+#         for k, v in sitevisitobj.dcsupply.__dict__.items():
+#             p.drawString(20, ind, str(k) + ': ' + str(v))
+#             ind -= 15
+#         for k, v in sitevisitobj.dimension.__dict__.items():
+#             p.drawString(20, ind, str(k) + ': ' + str(v))
+#             ind -= 15
+#         # End writing
+#         p.showPage()
+#         p.save()
+#         pdf = buffer.getvalue()
+#         buffer.close()
+#         response.write(pdf)
+#         return response
+#     except Exception as ex:
+#         print(ex)
+#         return redirect('/index')
+#     pass
+
+
+
+def render_to_pdf(template_src, context_dict={}):
+    from io import BytesIO
+    from django.template.loader import get_template
+    from xhtml2pdf import pisa
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+#Automaticly downloads to PDF file
 def tssViewSmartPDF(request):
-    try:
-        from io import BytesIO
-        from reportlab.pdfgen import canvas
-        sitevisitobj = SiteVisit.objects.get(id=request.GET.get('id'))
-        site = sitevisitobj.site
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="' + \
-            str(site.site_id) + '_' + \
-            str(sitevisitobj.visited.strftime("%d_%m_%Y")) + '.pdf"'
-        buffer = BytesIO()
-        p = canvas.Canvas(buffer)
-        # Start writing the PDF here
-        ind = 800
-        for k, v in site.__dict__.items():
-            p.drawString(20, ind, str(k) + ': ' + str(v))
-            ind -= 15
-        for k, v in sitevisitobj.contract.__dict__.items():
-            p.drawString(20, ind, str(k) + ': ' + str(v))
-            ind -= 15
-        for k, v in sitevisitobj.details.__dict__.items():
-            p.drawString(20, ind, str(k) + ': ' + str(v))
-            ind -= 15
-        for k, v in sitevisitobj.dcsupply.__dict__.items():
-            p.drawString(20, ind, str(k) + ': ' + str(v))
-            ind -= 15
-        for k, v in sitevisitobj.dimension.__dict__.items():
-            p.drawString(20, ind, str(k) + ': ' + str(v))
-            ind -= 15
-        # End writing
-        p.showPage()
-        p.save()
-        pdf = buffer.getvalue()
-        buffer.close()
-        response.write(pdf)
-        return response
-    except Exception as ex:
-        print(ex)
-        return redirect('/index')
-    pass
+    sitevisitobj = SiteVisit.objects.get(id=request.GET.get('id'))
+    siteobj = sitevisitobj.site
+    contractobj = sitevisitobj.contract
+    detailsobj = sitevisitobj.details
+    dcsupplyobj = sitevisitobj.dcsupply
+    dimensionobj = sitevisitobj.dimension
+    geographyobj = sitevisitobj.geography
+    visited = sitevisitobj.visited
+    
+    data = {
+        "Site_ID": siteobj.site_id,
+        "Site_Name": siteobj.site_name,
+        "Survay_Date": "",
+        "Survay_Time": "",
+        "Site_Region": siteobj.site_region,
+        "Site_Latitute":siteobj.site_latitude,
+        "Site_Longitude":siteobj.site_longitude,
+        "Contractor":contractobj.contractor,
+        "Names_of_Contractor_Rep":contractobj.contractor_rep,
+        "Contact_of_Contractor_Rep":contractobj.contact_contractor_rep,
+        "DC_System":detailsobj.dc_system_on_site,
+        "DC_System_brand":detailsobj.dc_system_brand,
+        "DC_System_size":detailsobj.dc_system_size,
+        "space_availablity":detailsobj.space_avail_in_dc_cabinet,
+        "MPPT_len":detailsobj.length_dc_cabinet,
+        "MPPT_hig":detailsobj.height_dc_cabinet,
+        "tall_structure":detailsobj.tall_structure,
+        "structure_type":detailsobj.tall_structure_name,
+        "structure_hig":detailsobj.tall_structure_height,
+        "structure_dist":detailsobj.tall_structure_distance_fence,
+        "cabinet_dist":detailsobj.distance_shed_dc_cabinate,
+        "cmnt":detailsobj.comment,
+        "sys_volt":dcsupplyobj.system_voltage,
+        "sys_cur1":dcsupplyobj.load_current_1,
+        "sys_cur2":dcsupplyobj.load_current_2,
+        "sys_cur3":dcsupplyobj.load_current_3,
+        "sys_cur4":dcsupplyobj.load_current_4,
+        "front":dimensionobj.front_side,
+        "right":dimensionobj.right_side,
+        "back":dimensionobj.back_side,
+        "left":dimensionobj.left_side,
+        "front_dist":dimensionobj.distance_tower_front,
+        "right_dist":dimensionobj.distance_tower_right,
+        "back_dist":dimensionobj.distance_tower_back,
+        "left_dist":dimensionobj.distance_tower_left,
+        "A1":dimensionobj.length_side_A_option_1,
+        "B1":dimensionobj.length_side_B_option_1,
+        "C1":dimensionobj.length_side_C_option_1,
+        "D1":dimensionobj.length_side_D_option_1,
+        "A2":dimensionobj.length_side_A_option_2,
+        "B2":dimensionobj.length_side_B_option_2,
+        "C2":dimensionobj.length_side_C_option_2,
+        "D2":dimensionobj.length_side_D_option_2,
+        "block_diagram":geographyobj.sketch_1,
+        "shade_diagram":geographyobj.sketch_2,
+        "prefered_location":geographyobj.sketch_3,
+        "map_draw":geographyobj.sketch_4,
+        "visited": visited,
+        "extra_imgs":SupportingImagesGeographical.objects.filter(geographicaldetails=geographyobj.id),
+    }
+    
+    pdf = render_to_pdf('frontend/pdf_template.html', data)
+    
+    response = HttpResponse(pdf, content_type='application/pdf')
+    filename = "TSS_Report_"+ str(siteobj.site_id) + str(sitevisitobj.visited.strftime("%d_%m_%Y")) +".pdf"
+    content = "attachment; filename="+(filename)
+    response['Content-Disposition'] = content
+    return response
+
 
 
 def tssEntrySmart(request):
