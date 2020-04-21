@@ -1,15 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from django.core.files.storage import FileSystemStorage
-from PIL import Image
-
 from api.models import *
 from django.conf import settings
 import os
 
 import datetime
-from django.utils.timezone import make_aware
 
 
 # Create your views here.
@@ -35,48 +31,54 @@ def tssViewSmart(request):
 
 
 def tssViewSmartPDF(request):
-    sitevisitobj = SiteVisit.objects.get(id=request.GET.get('id'))
-
-    from io import BytesIO
-    from django.template.loader import get_template
-    from xhtml2pdf import pisa
-
-    def link_callback(uri, rel):
-        sUrl = settings.STATIC_URL      # Typically /static/
-        sRoot = settings.STATIC_ROOT    # Typically /home/userX/project_static/
-        mUrl = settings.MEDIA_URL       # Typically /static/media/
-        mRoot = settings.MEDIA_ROOT     # Typically /home/userX/project_static/media/
-        # convert URIs to absolute system paths
-        if uri.startswith(mUrl):
-            path = os.path.join(mRoot, uri.replace(mUrl, ""))
-        elif uri.startswith(sUrl):
-            path = os.path.join(sRoot, uri.replace(sUrl, ""))
-        else:
-            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
-        # make sure that file exists
-        if not os.path.isfile(path):
-                raise Exception(
-                    'media URI must start with %s or %s' % (sUrl, mUrl)
-                )
-        return path
-
-    template = get_template('frontend/pdf_template.html')
-    html  = template.render({
-        "sitevisit": sitevisitobj,
-        "extra_imgs":SupportingImagesGeographical.objects.filter(geographicaldetails=sitevisitobj.geography),
-    })
-    result = BytesIO()
     try:
-        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result, link_callback=link_callback)
-        pdf = HttpResponse(result.getvalue(), content_type='application/pdf')
-    except:
-        pdf = None
-    
-    response = HttpResponse(pdf, content_type='application/pdf')
-    filename = "TSS_Report_"+ str(sitevisitobj.site.site_id) + str(sitevisitobj.visited.strftime("%d_%m_%Y")) +".pdf"
-    content = "attachment; filename="+(filename)
-    response['Content-Disposition'] = content
-    return response
+        pass
+        sitevisitobj = SiteVisit.objects.get(id=request.GET.get('id'))
+
+        from io import BytesIO
+        from django.template.loader import get_template
+        from xhtml2pdf import pisa
+
+        def link_callback(uri, rel):
+            sUrl = settings.STATIC_URL      # Typically /static/
+            sRoot = settings.STATIC_ROOT    # Typically /home/userX/project_static/
+            mUrl = settings.MEDIA_URL       # Typically /static/media/
+            mRoot = settings.MEDIA_ROOT     # Typically /home/userX/project_static/media/
+            # convert URIs to absolute system paths
+            if uri.startswith(mUrl):
+                path = os.path.join(mRoot, uri.replace(mUrl, ""))
+            elif uri.startswith(sUrl):
+                path = os.path.join(sRoot, uri.replace(sUrl, ""))
+            else:
+                return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+            # make sure that file exists
+            if not os.path.isfile(path):
+                    raise Exception(
+                        'media URI must start with %s or %s' % (sUrl, mUrl)
+                    )
+            return path
+
+        template = get_template('frontend/pdf_template.html')
+        html  = template.render({
+            "sitevisit": sitevisitobj,
+            "extra_imgs":SupportingImagesGeographical.objects.filter(geographicaldetails=sitevisitobj.geography),
+        })
+        result = BytesIO()
+        try:
+            pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result, link_callback=link_callback)
+            pdf = HttpResponse(result.getvalue(), content_type='application/pdf')
+        except:
+            pdf = None
+        
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "TSS_Report_"+ str(sitevisitobj.site.site_id) + str(sitevisitobj.visited.strftime("%d_%m_%Y")) +".pdf"
+        content = "attachment; filename="+(filename)
+        response['Content-Disposition'] = content
+        return response
+    except Exception as ex:
+        print(ex)
+        from django.views.defaults import bad_request
+        return bad_request(request, ex)
 
 
 
@@ -130,6 +132,12 @@ def tssEntrySmart(request):
         sketch_3 = request.FILES['sketch_3']
         sketch_4 = request.FILES['sketch_4']
         supportingImagesNumber = request.POST['supportingImagesNumber']
+
+        from django.core.files.storage import FileSystemStorage
+        from PIL import Image
+        from django.utils.timezone import make_aware
+        from django.core.files import File
+
         try:
             SiteMaster.objects.create(site_id=site_id, site_name=site_name, site_region=site_region,
                                       site_latitude=site_latitude, site_longitude=site_longitude)
@@ -186,31 +194,62 @@ def tssEntrySmart(request):
                 length_side_C_option_2=length_side_C_option_2 if length_side_C_option_2 != '' else None,
                 length_side_D_option_2=length_side_D_option_2 if length_side_D_option_2 != '' else None
             )
+
             fs=FileSystemStorage()
+
+            geography=GeographicalDetails()
+
             sketch_1=fs.save(sketch_1.name, sketch_1)
-            sketch_1=fs.url(sketch_1)
-            # Image.open(settings.BASE_DIR sketch_1).verify()
+            try:
+                Image.open(settings.MEDIA_ROOT + '/' + sketch_1).verify()
+                geography.sketch_1.save(sketch_1, File(open(settings.MEDIA_ROOT + '/' + sketch_1, 'rb')))
+            except Exception as ex:
+                print(ex)
+                os.remove(settings.MEDIA_ROOT + '/' + sketch_1)
+                raise Exception("Broken File")
+
             sketch_2=fs.save(sketch_2.name, sketch_2)
-            sketch_2=fs.url(sketch_2)
-            # Image.open(settings.BASE_DIR sketch_2).verify()
+            try:
+                Image.open(settings.MEDIA_ROOT + '/' + sketch_2).verify()
+                geography.sketch_2.save(sketch_2, File(open(settings.MEDIA_ROOT + '/' + sketch_2, 'rb')))
+            except Exception as ex:
+                print(ex)
+                os.remove(settings.MEDIA_ROOT + '/' + sketch_2)
+                raise Exception("Broken File")
+
             sketch_3=fs.save(sketch_3.name, sketch_3)
-            sketch_3=fs.url(sketch_3)
-            # Image.open(settings.BASE_DIR sketch_3).verify()
+            try:
+                Image.open(settings.MEDIA_ROOT + '/' + sketch_3).verify()
+                geography.sketch_3.save(sketch_3, File(open(settings.MEDIA_ROOT + '/' + sketch_3, 'rb')))
+            except Exception as ex:
+                print(ex)
+                os.remove(settings.MEDIA_ROOT + '/' + sketch_3)
+                raise Exception("Broken File")
+
             sketch_4=fs.save(sketch_4.name, sketch_4)
-            sketch_4=fs.url(sketch_4)
-            # Image.open(settings.BASE_DIR sketch_4).verify()
-            geography=GeographicalDetails.objects.create(
-                sketch_1=sketch_1, sketch_2=sketch_2, sketch_3=sketch_3, sketch_4=sketch_4)
+            try:
+                Image.open(settings.MEDIA_ROOT + '/' + sketch_4).verify()
+                geography.sketch_4.save(sketch_4, File(open(settings.MEDIA_ROOT + '/' + sketch_4, 'rb')))
+            except Exception as ex:
+                print(ex)
+                os.remove(settings.MEDIA_ROOT + '/' + sketch_4)
+                raise Exception("Broken File")
+            
+            geography.save()
+            
             for i in range(1, int(supportingImagesNumber) + 1):
+                supportimgobj=SupportingImagesGeographical(geographicaldetails = geography)
                 imagename=request.FILES['supporting_images_' + str(i)]
                 imagename=fs.save(imagename.name, imagename)
-                imagename=fs.url(imagename)
-                # Image.open(imagename).verify()
-                SupportingImagesGeographical.objects.create(
-                    geographicaldetails=geography, supporting_images=imagename,
-                    supporting_images_caption=request.POST["supporting_images_caption" + "_" + str(
-                        i)]
-                )
+                try:
+                    Image.open(settings.MEDIA_ROOT + '/' + imagename).verify()
+                    supportimgobj.supporting_images.save(imagename, File(open(settings.MEDIA_ROOT + '/' + imagename, 'rb')))
+                    supportimgobj.supporting_images_caption = request.POST["supporting_images_caption" + "_" + str(i)]
+                    supportimgobj.save()
+                except Exception as ex:
+                    print(ex)
+                    os.remove(settings.MEDIA_ROOT + '/' + imagename)
+                    raise Exception("Broken File")
         except Exception as ex:
             print(ex)
             if details != None:
