@@ -9,5 +9,6 @@ urlpatterns = [
     path('blank', views.blankSmart, name='blankSmart'),
     path('tss-entry', views.tssEntrySmart, name='tssEntrySmart'),
     path('tss-view', views.tssViewSmart, name='tssviewSmart'),
+    path('tssassign', views.tssAssign, name='tssAssign'),
     path('tss-view-pdf', views.tssViewSmartPDF, name='tssViewSmartPDF'),
 ]

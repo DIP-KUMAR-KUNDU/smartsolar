@@ -5,6 +5,21 @@ import uuid
 from django.utils import timezone
 
 # Create your models here.
+class CompanyUser(models.Model):
+    user = models.OneToOneField(User, models.SET_NULL, blank=True, null=True)
+    comp = models.CharField(verbose_name="Company Name", max_length=30, choices=(
+    ("VYOMA", "VYOMA"),
+    ("PARK", "PARK"),
+    ("ATC", "ATC")
+    ))
+    role = models.CharField(verbose_name="User role in application", max_length=30, choices=(
+    ("VIEW", "VIEW"),
+    ("ASSIGN", "ASSIGN"),
+    ), null=True)
+
+    def __str__(self):
+        return self.user.username
+
 
 
 class SiteMaster(models.Model):
@@ -12,10 +27,10 @@ class SiteMaster(models.Model):
     site_id = models.CharField(max_length=50, unique=True)
     site_name = models.CharField(max_length=50, blank=True, null=True)
     site_region = models.CharField(max_length=50, blank=True, null=True)
-    site_latitude = models.DecimalField(
-        max_digits=22, decimal_places=16, blank=True, null=True)
-    site_longitude = models.DecimalField(
-        max_digits=22, decimal_places=16, blank=True, null=True)
+    site_latitude = models.CharField(
+        max_length=30, blank=True, null=True)
+    site_longitude = models.CharField(
+        max_length=30, blank=True, null=True)
 
     def __str__(self):
         return self.site_id
@@ -145,6 +160,15 @@ class SiteVisit(models.Model):
     dimension = models.ForeignKey(SiteDimensionDetails, on_delete=models.CASCADE)
     geography = models.ForeignKey(GeographicalDetails, on_delete=models.CASCADE)
     visited = models.DateTimeField(default=timezone.now, unique=True)
+    status_stage = models.SmallIntegerField(default=4)
 
     class Meta:
         unique_together = ('site', 'contract', 'details', 'dcsupply', 'dimension', 'geography')
+
+
+class AssignUser(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    site_visit = models.ForeignKey(SiteVisit, on_delete=models.CASCADE, blank=True, null=True)
+    assigned = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)
+    task = models.CharField(max_length=100)
+    comment = models.TextField(blank=True, null=True)

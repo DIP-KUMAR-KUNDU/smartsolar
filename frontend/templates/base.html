@@ -33,6 +33,18 @@
     <link rel="shortcut icon" type="image" href="{% static 'frontend/dist/img/AdminLTELogo.png' %}">
     <!-- Form style -->
     <link rel="stylesheet" href="{% static 'frontend/dist/css/formstyle.css' %}">
+
+    <!-- jQuery -->
+    <script src="{% static 'frontend/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{% static 'frontend/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'frontend/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
 </head>
 
 
@@ -73,7 +85,7 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Username</a>
+                        <a href="#" class="d-block">{{ request.user.username }}</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -91,6 +103,40 @@
                                 </p>
                             </a>
                         </li>
+
+
+
+
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Site Distribution
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="tssassign?task=Layout Drawing" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Layout Drawing</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="tssassign?task=Solar Analysis" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Solar Analysis</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+
+
+
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" {% if activepage|slice:":3" == "tss" %} {{ "class='nav-link active'" }}
                                 {% else %} {{ "class='nav-link'" }} {% endif %}>
@@ -170,16 +216,6 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'frontend/plugins/jquery/jquery.min.js' %}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{% static 'frontend/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-    <!-- Bootstrap 4 -->
-    <script src="{% static 'frontend/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- ChartJS -->
     <script src="{% static 'frontend/plugins/chart.js/Chart.min.js' %}"></script>
     <!-- Sparkline -->
@@ -207,7 +243,7 @@
     <script src="{% static 'frontend/dist/js/demo.js' %}"></script>
 
 
-    
+
 </body>
 
 </html>

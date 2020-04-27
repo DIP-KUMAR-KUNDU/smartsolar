@@ -1,344 +1,828 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+        integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+        crossorigin="anonymous"></script>
+
+    <title>Solar Feasibility Site Survey Report of {{sitevisit.site.site_id}} of {{ sitevisit.visited|date:"d/m/Y" }}
+        {{ sitevisit.visited|date:"h:i A" }}</title>
+    
+        <meta charset="UTF-8">
+
     <style>
-        @page {
-            size: a4 portrait;
+        .main_div {
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+        }
 
-            @frame header_frame {
-                /* Static Frame */
-                -pdf-frame-content: header_content;
-                left: 50pt;
-                width: 512pt;
-                top: 50pt;
-                height: 40pt;
-            }
+        .border_div {
+            border: 1px solid black;
+        }
 
-            @frame content_frame {
-                /* Content Frame */
-                left: 50pt;
-                width: 512pt;
-                top: 90pt;
-                height: 632pt;
-            }
+        .left_text {
+            text-align: left;
+        }
 
-            @frame footer_frame {
-                /* Another static Frame */
-                -pdf-frame-content: footer_content;
-                left: 50pt;
-                width: 512pt;
-                top: 772pt;
-                height: 20pt;
-            }
+        .PDF-BTN {
+            background-color: yellowgreen;
+            color: aliceblue;
+            padding: 15px;
+            float: right;
+            margin: 50px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+
+        thead,
+        th {
+            border: 1px;
+            border-color: #e0dcdc;
+            background-color: #e0dcdc;
+            padding: 10px;
+        }
+
+        div {
+            text-align: center;
+        }
+
+        ul {
+            display: inline-block;
+            text-align: left;
+        }
+
+        ol {
+            display: inline-block;
+            text-align: left;
         }
     </style>
 </head>
 
-<body>
-    <!-- Content for Static Frame 'header_frame' -->
-    <div id="header_content">
-        <img src="/media/atc-logo.png" alt="Logo" height="60" width="170"> 
-    </div>
+<body id="targetPDF">
+    <div class="main_div">
+        <div>
+            <img src="/media/atc-logo.png" height="80" width="160" />
+        </div>
+        <div>
+            <h1>Solar Feasibility Site Survey</h1>
+        </div>
+        <div class="left_text">
+            The Solar contractor must present the full Solar Feasibility Site Survey (SFSS) document for the solar
+            feasibility survey. All informations recorded in this document must be factually accurate. Note: Solar
+            contractor will be fully liable for non-performance of the solar solution because all data captured on this
+            SFSS documents will be use as key inputs to produce the final solar solution design, thus contractors is
+            fully responsible for the solution. Ensure no property or live equipments is affected during the survey and
+            all completed forms must be legible.
+            <br><br>Contractor must present the following tools for the survey:
+        </div>
+        <div class="left_text">
+            <ul>
+                <li>Compass</li>
+                <li>Surveyor’s Tape measure</li>
+                <li>Pen and Book</li>
+                <li>Digital Camera</li>
+                <li>ATC Site Acsys key</li>
+                <li>Clamp meter (optional)</li>
+            </ul><br><br><br><br>
+        </div>
+        <div>
+            <table width="70%" align="center">
+                <tbody>
+                    <tr>
+                        <td>Site Id</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_id}}</font>
+                        </td>
+                        <td>Site Name</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_name}}</font>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"d/m/Y" }}</font>
+                        </td>
+                        <td>Time</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"h:i A" }}</font>
+                        </td>
+                        <td>Region</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_region}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br><br>
+        </div>
+        <div>
+            <table width="50%" align="center">
+                <thead>
 
-    <!-- Content for Static Frame 'footer_frame' -->
-    <div id="footer_content">(c) - page <pdf:pagenumber>
-            of <pdf:pagecount>
-    </div>
-    <h2>Solar Feasibility Site Survey</h2>
-    <!-- HTML Content -->
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <td>Site ID</td>
-                    <td>Site Name</td>
-                    <td>Region</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{sitevisit.site.site_id}}</td>
-                    <td>{{sitevisit.site.site_name}}</td>
-                    <td>{{sitevisit.site.site_region}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <table>
-            <thead>
-                <tr>
-                    <td>Date</td>
-                    <td>Time</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ sitevisit.visited|date:"d/m/Y" }}</td>
-                    <td>{{ sitevisit.visited|date:"h:i A" }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div><br>
-    <hr>
-    <div>
-        <div>
-            <h3>Site Coordinate</h3>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <td>Latitude</td>
-                    <td>Longitude</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{sitevisit.site.site_latitude}}</td>
-                    <td>{{sitevisit.site.site_longitude}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div><br>
-    <hr>
-    <div>
-        <div>
-            <b>Contractor:</b> <u>{{sitevisit.contract.contractor}}</u>
+                    <th><b>Site Coordinate</b></th>
+                    <th></th>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Latitude</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_latitude}}</font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>latitude_here</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_longitude}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br><br><br>
         </div>
         <div>
-            <b>Names of Contractor Rep:</b> <u>{{sitevisit.contract.contractor_rep}}</u>
+            <font style="font-size:18px">Contractor: <u>
+                    <font color="blue">{{sitevisit.contract.contractor}}</font>
+                </u></font>
+            <br><br>
+
+            <font style="font-size:18px">Names of Contractor Rep: <u>
+                    <font color="blue">{{sitevisit.contract.contractor_rep}}</font>
+                </u></font>
+            <br><br>
+
+            <font style="font-size:18px">Contact of Contractor Rep: <u>
+                    <font color="blue">{{sitevisit.contract.contact_contractor_rep}}</font>
+                </u></font>
+        </div><br><br>
+        <hr>
+        <div>
+            <img src="/media/atc-logo.png" height="70" width="140" />
         </div>
         <div>
-            <b>Contact of Contractor Rep:</b> <u>{{sitevisit.contract.contact_contractor_rep}}</u>
+            <table width="70%" align="center">
+                <tbody>
+                    <tr>
+                        <td>Site Id</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_id}}</font>
+                        </td>
+                        <td>Site Name</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_name}}</font>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"d/m/Y" }}</font>
+                        </td>
+                        <td>Time</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"h:i A" }}</font>
+                        </td>
+                        <td>Region</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_region}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div><br>
-    <hr>
-    <div>
-        <div>
+        <div class="left_text">
             <h3>1. Site Information</h3>
         </div>
         <div>
-            <b>1.1 DC System on site?</b>
-            {% if sitevisit.details.dc_system_on_site == True %}
-            Yes
-            {% else %}
-            No
-            {% endif %}
+            <table width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td>1.1</td>
+                        <td>DC System on site?</td>
+                        {% if sitevisit.details.dc_system_on_site == True %}
+                        <td>
+                            <font color="blue">Yes</font>
+                        </td>
+                        {% else %}
+                        <td>
+                            <font color="blue">Yes</font>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>1.2</td>
+                        <td>DC System brand and size</td>
+                        <td>
+                            <font color="blue">
+                                {{sitevisit.details.dc_system_brand}}<br>{{sitevisit.details.dc_system_size}}</font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1.3</td>
+                        <td>Is space available inside the DC Cabinet for Solar MPPT Controller to be installed at the
+                            power compartment section</td>
+                        {%if sitevisit.details.space_avail_in_dc_cabinet == True %}
+                        <td>
+                            <font color="blue">Availavle</font>
+                        </td>
+                        {% else %}
+                        <td>
+                            <font color="blue">Un-Availavle</font>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>1.4</td>
+                        <td>Measure and record the available space for the MPPT controller in the DC cabinet</td>
+                        <td>
+                            Length: <u>
+                                <font color="blue">{{sitevisit.details.length_dc_cabinet}}</font>
+                            </u> meter<br>Height: <u>
+                                <font color="blue">{{sitevisit.details.height_dc_cabinet}}</font>
+                            </u> meter
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1.5</td>
+                        <td>Is there any tall structure, tree or building higher than the site fence that can cause
+                            possible shading?</td>
+                        {% if sitevisit.details.tall_structure == True %}
+                        <td>
+                            <font color="blue">Yes</font>
+                        </td>
+                        {% else %}
+                        <td>
+                            <font color="blue">No</font>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>1.6</td>
+                        <td>If Yes indicate or name the structure type(s)</td>
+                        <td>
+                            <font color="blue">{{sitevisit.details.tall_structure_name}}</font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1.7</td>
+                        <td>If yes, specify the height and the distance of the structure from the site fence</td>
+                        <td>Height of structure AGL: <u>
+                                <font color="blue">{{sitevisit.details.tall_structure_height}}</font>
+                            </u><br>Distance from fence: <u>
+                                <font color="blue">{{sitevisit.details.tall_structure_distance_fence}}</font>
+                            </u></td>
+                    </tr>
+                    <tr>
+                        <td>1.8</td>
+                        <td>Record distance from Shed leg on which DB will be fix to the DC Cabinet in meters</td>
+                        <td>
+                            <font color="blue">{{sitevisit.details.distance_shed_dc_cabinate}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                            Any Comment:
+                        </td>
+                        <td>
+                            <font color="blue">{{sitevisit.details.comment}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div>
-            <b>1.2 DC System brand and size</b>
-            {{sitevisit.details.dc_system_brand}} , {{sitevisit.details.dc_system_size}}
-        </div>
-        <div>
-            <b>1.3 Is space available inside the DC Cabinet for Solar MPPT Controller to be installed at the power
-                compartment section</b>
-            {%if sitevisit.details.space_avail_in_dc_cabinet == True %}
-            Availavle
-            {% else %}
-            Un-Availavle
-            {% endif %}
-        </div>
-        <div>
-            <b>1.4 Measure and record the available space for the MPPT controller in the DC cabinet</b>
-            <div>
-                Length: {{sitevisit.details.length_dc_cabinet}} meter
-            </div>
-            <div>
-                Height: {{sitevisit.details.height_dc_cabinet}} meter
-            </div>
-        </div>
-        <div>
-            <b>1.5 Is there any tall structure, tree or building higher than the site fence that can cause possible
-                shading?</b>
-            {% if sitevisit.details.tall_structure == True %}
-            Yes
-            {% else %}
-            No
-            {% endif %}
-        </div>
-        <div>
-            <b>1.6 If Yes indicate or name the structure type(s)</b>
-            {{sitevisit.details.tall_structure_name}}
-        </div>
-        <div>
-            <b>1.7 If yes, specify the height and the distance of the structure from the site fence </b>
-            <div>
-                <b>Height of structure AGL </b>
-                {{sitevisit.details.tall_structure_height}}
-            </div>
-            <div>
-                <b>Distance from fence </b>
-                {{sitevisit.details.tall_structure_distance_fence}}
-            </div>
-        </div>
-        <div>
-            <b>1.8 Record distance from Shed leg on which DB will be fix to the DC Cabinet in meters</b>
-            {{sitevisit.details.distance_shed_dc_cabinate}}
-        </div>
-        <div>
-            <b>Any comment:</b>
-            <div>
-                {{sitevisit.details.comment}}
-            </div>
-        </div>
-    </div><br>
-    <hr>
-    <div>
-        <div>
+        <div class="left_text">
             <h3>2. DC Supply parameter</h3>
         </div>
         <div>
-            <b>2.1 System Voltage: </b>
-            <u>{{sitevisit.dcsupply.system_voltage}}</u> Volt
+            <table width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td>2.1</td>
+                        <td>System Voltage</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dcsupply.system_voltage}}</font>
+                        </td>
+                        <td>V</td>
+                        <td>
+                            <font color="grey"><em>Measured between +ve and -ve</em></font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.2</td>
+                        <td>Load Current_1</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dcsupply.load_current_1}}</font>
+                        </td>
+                        <td>A</td>
+                        <td>
+                            <font color="grey"><em>Measured on -ve cable</em></font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.3</td>
+                        <td>Load Current_2</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dcsupply.load_current_2}}</font>
+                        </td>
+                        <td>A</td>
+                        <td>
+                            <font color="grey"><em>Measured on -ve cable</em></font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.4</td>
+                        <td>Load Current_3</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dcsupply.load_current_3}}</font>
+                        </td>
+                        <td>A</td>
+                        <td>
+                            <font color="grey"><em>Measured on -ve cable</em></font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.5</td>
+                        <td>Load Current_4</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dcsupply.load_current_4}}</font>
+                        </td>
+                        <td>A</td>
+                        <td>
+                            <font color="grey"><em>Measured on -ve cable</em></font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <hr>
         <div>
-            <b>2.2 Load Current_1: </b>
-            <u>{{sitevisit.dcsupply.load_current_1}}</u> Amp
+            <img src="/media/atc-logo.png" height="70" width="140" />
+        </div><br>
+        <div>
+            <table width="70%" align="center">
+                <tbody>
+                    <tr>
+                        <td>Site Id</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_id}}</font>
+                        </td>
+                        <td>Site Name</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_name}}</font>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"d/m/Y" }}</font>
+                        </td>
+                        <td>Time</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"h:i A" }}</font>
+                        </td>
+                        <td>Region</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_region}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div>
-            <b>2.3 Load Current_2: </b>
-            <u>{{sitevisit.dcsupply.load_current_2}}</u> Amp
-        </div>
-        <div>
-            <b>2.4 Load Current_3: </b>
-            <u>{{sitevisit.dcsupply.load_current_3}}</u> Amp
-        </div>
-        <div>
-            <b>2.5 Load Current_4: </b>
-            <u>{{sitevisit.dcsupply.load_current_4}}</u> Amp
-        </div>
-    </div><br>
-    <hr>
-    <br><br>
-    <div>
-        <div>
+        <div class="left_text">
             <h3>3. Site Dimension Detail</h3>
         </div>
-        <div>
-            <h4><u>Site Dimension</u></h4>
-            <div>
-                <b>Front side (Gate side):</b>
-                {{sitevisit.dimension.front_side}} meter
-            </div>
-            <div>
-                <b>Right Side (When facing the gate from outside the site):</b>
-                {{sitevisit.dimension.right_side}} meter
-            </div>
-            <div>
-                <b>Back Side (opposite the gate side):</b>
-                {{sitevisit.dimension.back_side}} meter
-            </div>
-            <div>
-                <b>Left Side (When facing the gate from outside the site):</b>
-                {{sitevisit.dimension.left_side}} meter
-            </div>
+        <div class="border_div">
+            <table width="100%" align="center">
+                <thead>
+                    <th>Site Dimension</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Front side (Gate side)</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.front_side}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Right Side (When facing the gate from outside the site)</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.right_side}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Back Side (opposite the gate side)</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.back_side}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Left Side (When facing the gate from outside the site)</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.left_side}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table width="100%" align="center">
+                <thead>
+                    <th>Available space around the tower</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Distance from tower Leg/face or monopole to front side of fence</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.distance_tower_front}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Distance from tower Leg/face or monopole to Right side of fence</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.distance_tower_right}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Distance from tower Leg/face or monopole to Back side of fence</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.distance_tower_back}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Distance from tower Leg/face or monopole to Left side of fence</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.distance_tower_left}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table width="100%" align="center">
+                <thead>
+                    <th>Propose location for Solar shed (Option_1)</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Length of Side_A</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_A_option_1}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Length of Side_B</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_B_option_1}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Length of Side_C</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_C_option_1}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Length of Side_D</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_D_option_1}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table width="100%" align="center">
+                <thead>
+                    <th>Propose location for Solar shed (Option_2)</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Length of Side_A</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_A_option_2}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Length of Side_B</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_B_option_2}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Length of Side_C</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_C_option_2}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                    <tr>
+                        <td>Length of Side_D</td>
+                        <td>
+                            <font color="blue">{{sitevisit.dimension.length_side_D_option_2}}</font>
+                        </td>
+                        <td>meters</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <hr>
         <div>
-            <h4><u>Available space around the tower</u></h4>
-            <div>
-                <b>Distance from tower Leg/face or monopole to front side of fence:</b>
-                {{sitevisit.dimension.distance_tower_front}} meter
-            </div>
-            <div>
-                <b>Distance from tower Leg/face or monopole to Right side of fence:</b>
-                {{sitevisit.dimension.distance_tower_right}} meter
-            </div>
-            <div>
-                <b>Distance from tower Leg/face or monopole to Back side of fence:</b>
-                {{sitevisit.dimension.distance_tower_back}} meter
-            </div>
-            <div>
-                <b>Distance from tower Leg/face or monopole to Left side of fence:</b>
-                {{sitevisit.dimension.distance_tower_left}} meter
-            </div>
+            <img src="/media/atc-logo.png" height="70" width="140" />
+        </div><br>
+        <div>
+            <table width="70%" align="center">
+                <tbody>
+                    <tr>
+                        <td>Site Id</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_id}}</font>
+                        </td>
+                        <td>Site Name</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_name}}</font>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"d/m/Y" }}</font>
+                        </td>
+                        <td>Time</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"h:i A" }}</font>
+                        </td>
+                        <td>Region</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_region}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br>
         </div>
-        <div>
-            <h4><u>Propose location for Solar shed (Option_1)</u></h4>
-            <div>
-                <b>Length of Side_A:</b>
-                {{sitevisit.dimension.length_side_A_option_1}} meter
-            </div>
-            <div>
-                <b>Length of Side_B:</b>
-                {{sitevisit.dimension.length_side_B_option_1}} meter
-            </div>
-            <div>
-                <b>Length of Side_C:</b>
-                {{sitevisit.dimension.length_side_C_option_1}} meter
-            </div>
-            <div>
-                <b>Length of Side_D:</b>
-                {{sitevisit.dimension.length_side_D_option_1}} meter
-            </div>
-        </div>
-        <div>
-            <h4><u>Propose location for Solar shed (Option_2) </u>(<em>Optional</em>)</h4>
-            <div>
-                <b>Length of Side_A:</b>
-                {{sitevisit.dimension.length_side_A_option_2}} meter
-            </div>
-            <div>
-                <b>Length of Side_B:</b>
-                {{sitevisit.dimension.length_side_B_option_2}} meter
-            </div>
-            <div>
-                <b>Length of Side_C:</b>
-                {{sitevisit.dimension.length_side_C_option_2}} meter
-            </div>
-            <div>
-                <b>Length of Side_D:</b>
-                {{sitevisit.dimension.length_side_D_option_2}} meter
-            </div>
-        </div>
-    </div><br>
-    <hr>
-    <div>
-        <div>
+        <div class="left_text">
             <h3>4. Geographical information</h3>
         </div>
         <div>
-            <div>
-                <b>Sketch block diagram of site layout:</b>
-                <div>
-                    <img src="{{sitevisit.geography.sketch_1.url}}" alt="" height="260" width="260"><br>
-                </div>
-            </div><br><br>
-            <div>
-                <b>Site tower and its shade at every 20 minutes for 2 hours Plot:</b>
-                <div>
-                    <img src="{{sitevisit.geography.sketch_2.url}}" alt="" height="245" width="245"><br>
-                </div>
+            <div class=left_text>
+                Sketch block diagram of site layout show the following:<br>
+                <ul>
+                    <li>Tower and site entrance</li>
+                    <li>All available equipments plinth</li>
+                    <li>All equipments (Genset, DC Cabinet, AVR, etc)</li>
+                    <li>Indicate dimensions between adjoining equipments and fence and</li>
+                    <li>Provide the True North & South in relation to the site orientation</li>
+                </ul>
             </div><br>
             <div>
-                <b> Your prefered PV shed location on the site sketch:</b>
-                <div>
-                    <img src="{{sitevisit.geography.sketch_3.url}}" alt="" height="245" width="245"><br>
-                </div>
+                <img src="{{sitevisit.geography.sketch_1.url}}" height="600" width="600" />
+            </div>
+        </div>
+        <div>
+            <img src="/media/atc-logo.png" height="70" width="140" />
+        </div><br>
+        <div>
+            <table width="70%" align="center">
+                <tbody>
+                    <tr>
+                        <td>Site Id</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_id}}</font>
+                        </td>
+                        <td>Site Name</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_name}}</font>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"d/m/Y" }}</font>
+                        </td>
+                        <td>Time</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"h:i A" }}</font>
+                        </td>
+                        <td>Region</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_region}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br>
+        </div>
+        <div>
+            <div>
+                Plot the site tower and its shade at every 20 minutes for 2 hours
             </div><br>
             <div>
-                <b>Locality map ofthe location indicating available roads and any major land marks sketch:</b>
-                <div>
-                    <img src="{{sitevisit.geography.sketch_4.url}}" alt="" height="245" width="245">
-                </div>
+                <img src="{{sitevisit.geography.sketch_2.url}}" height="370" width="370" />
+            </div>
+        </div><br>
+        <div>
+            <div>
+                Superimpose your prefer PV shed location on the site sketch_1
+            </div>
+            <br>
+            <div>
+                <img src="{{sitevisit.geography.sketch_3.url}}" height="370" width="370" />
+            </div>
+        </div>
+        <div>
+            <img src="/media/atc-logo.png" height="70" width="140" />
+        </div><br>
+        <div>
+            <table width="70%" align="center">
+                <tbody>
+                    <tr>
+                        <td>Site Id</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_id}}</font>
+                        </td>
+                        <td>Site Name</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_name}}</font>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"d/m/Y" }}</font>
+                        </td>
+                        <td>Time</td>
+                        <td>
+                            <font color="blue">{{ sitevisit.visited|date:"h:i A" }}</font>
+                        </td>
+                        <td>Region</td>
+                        <td>
+                            <font color="blue">{{sitevisit.site.site_region}}</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br>
+        </div>
+        <div>
+            <div>
+                Sketch the locality map of the location indicating available roads and any major land marks
+            </div><br>
+            <div>
+                <img src="{{sitevisit.geography.sketch_4.url}}" height="350" width="350" />
+            </div>
+        </div><br>
+        <div>
+            <div class="left_text">
+                <h3>4. Supporting Imgimgs</h3><br>
+                Submit softcopies of site pictures of the following:<br>
+            </div>
+            <div class="left_text">
+                <ol>
+                    <li>Site Signage</li>
+                    <li>Imgimg of all 4 sides around the tower which were recorded as Option_1 and or 2</li>
+                    <li>Imgimg of power compartment of DC system where Solar MPPT will be fix</li>
+                    <li>Complete site view from a distance to capture the full tower on site</li>
+                    <li>Google map view of the site and indicate the position of the site gate on the map</li>
+                </ol>
+            </div>
+        </div>
+        <div>
+            <table width="85%" align="center">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>Solar Contractor Representative</td>
+                        <td>ATC Ghana Representative</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Sign</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><br>
+        <hr>
+        <div>
+            <div>
+                <img src="/media/atc-logo.png" height="70" width="140" />
+            </div><br>
+            <div>
+                <table width="70%" align="center">
+                    <tbody>
+                        <tr>
+                            <td>Site Id</td>
+                            <td>
+                                <font color="blue">{{sitevisit.site.site_id}}</font>
+                            </td>
+                            <td>Site Name</td>
+                            <td>
+                                <font color="blue">{{sitevisit.site.site_name}}</font>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>
+                                <font color="blue">{{ sitevisit.visited|date:"d/m/Y" }}</font>
+                            </td>
+                            <td>Time</td>
+                            <td>
+                                <font color="blue">{{ sitevisit.visited|date:"h:i A" }}</font>
+                            </td>
+                            <td>Region</td>
+                            <td>
+                                <font color="blue">{{sitevisit.site.site_region}}</font>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><br>
+            </div>
+            <div class="left_text">
+                <h3># Supporting Imgimgs</h3><br>
+            </div>
+            <div>
+                {% for extra_img in extra_imgs %}
+                <table width="50%" align="left">
+                    <thead>
+                        <th>
+                            <b>{{extra_img.supporting_images_caption}}:</b>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="{{extra_img.supporting_images.url}}" height="260" width="260" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% endfor %}
             </div>
         </div>
     </div>
-    <hr>
-    <div>
-        <div>
-            <h3>5. Supporting images</h3>
-        </div>
-        <div>
-            {% for extra_img in extra_imgs %}
-            <div>
-                <b>{{extra_img.supporting_images_caption}}:</b>
-                <div>
-                    <img src="{{extra_img.supporting_images.url}}" alt="" height="245" width="245"><br>
-                </div>
-            </div><br>
-            {% endfor %}
-        </div>
-    </div><br>
 </body>
+
+<script>
+    window.print();
+    window.onafterprint = () => {
+        alert("Downloaded in your Download (default) folder");
+        window.close();
+     }
+</script>
+
 
 </html>
