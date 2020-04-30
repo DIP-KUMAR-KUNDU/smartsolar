@@ -30,7 +30,11 @@ def loginSmart(request):
             if user.is_superuser:
                 wrongUser = {"message": "Please use Site Admin"}
             else:
-                login(request, user)
+                try:
+                    CompanyUser.objects.get(user=user).comp
+                    login(request, user)
+                except:
+                    wrongUser = {"message": "Please contact admin to assign your company and your role. Then you can login"}
         else:
             wrongUser = {"message": "Wrong username or password"}
     if request.user.is_authenticated:
@@ -51,11 +55,14 @@ def blankSmart(request):
 @login_required(login_url='/')
 def tssViewSmart(request):
     try:
-        comp = CompanyUser.objects.get(user=request.user).comp
-        if comp == 'PARK':
-            stat = 4
-        elif comp == 'ATC':
-            stat = 8
+        if not request.user.is_superuser:
+            comp = CompanyUser.objects.get(user=request.user).comp
+            if comp == 'ATC':
+                stat = 9
+            elif comp in ['VYOMA', 'PARK']:
+                stat = 0
+            else:
+                raise Exception("Bad company")
         else:
             stat = 0
         return render(request, 'frontend/tss-view.html', {"sitevisit": SiteVisit.objects.filter(status_stage__gte=stat)})
@@ -81,13 +88,17 @@ def tssViewSmartPDF(request):
 def tssAssign(request):
     try:
         task = request.GET.get('task')
-        if task not in ['Layout Drawing', 'Solar Analysis']:
+        if task not in ['Layout Drawing', 'Solar Analysis', 'TSS Entry']:
             raise Exception("Wrong Task")
         if request.method == 'POST':
             site_visit = request.POST['site_visit']
             assigned = request.POST['assigned']
             comment = request.POST['comment']
             assu = User.objects.get(username=assigned)
+            # print(site_visit)
+            # print(assigned)
+            # print(comment)
+            # print(assu)
             if CompanyUser.objects.get(user=assu).role != 'ASSIGN':
                 raise Exception("Bad role")
             AssignUser.objects.create(
@@ -96,29 +107,47 @@ def tssAssign(request):
                 task=task,
                 comment = comment
             )
-        return render(request, 'frontend/tss-assign.html', 
-            {
-                "assignuser": AssignUser.objects.filter(task=task), 
-                "sitevisit": SiteVisit.objects.all(),
-                "task": task,
-                "companyuser": CompanyUser.objects.filter(),
-                "perm": CompanyUser.objects.get(user=request.user).role
-            }
-        )
+        data = {
+            "assignuser": AssignUser.objects.filter(task=task), 
+            "sitevisit": SiteVisit.objects.all(),
+            "task": task,
+            "companyuser": CompanyUser.objects.filter(),
+        }
+        if request.user.is_superuser:
+            data["perm"] = 'ASSIGN'
+        else:
+            data["perm"] = CompanyUser.objects.get(user=request.user).role
+        return render(request, 'frontend/tss-assign.html', data)
     except Exception as ex:
         print(ex)
         return bad_request(request, ex)
+
 
 
 @csrf_protect
 @login_required(login_url='/')
 def tssEntrySmart(request):
-    from .supportview.tssentryview import tssEntry
+    from .supportview.tssIUview import tssEntry
     try:
         return tssEntry(request)
     except Exception as ex:
         print(ex)
         return bad_request(request, ex)
+
+
+
+
+@csrf_protect
+@login_required(login_url='/')
+def tssUpdateSmart(request):
+    from .supportview.tssIUview import tssEdit
+    try:
+        return tssEdit(request)
+    except Exception as ex:
+        print(ex)
+        return bad_request(request, ex)
+
+
 
 
 @login_required(login_url='/')

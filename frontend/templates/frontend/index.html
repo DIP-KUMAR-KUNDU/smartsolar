@@ -4,6 +4,8 @@
 {% block content %}
 
 
+
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -11,12 +13,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Heading of the page</h1>
+          <h1 class="m-0 text-dark">Dashboard</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Blank</li>
+
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -27,8 +29,131 @@
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-12 col-6">
-          <h1>This is blank page</h1>
+        <div class="col-lg-6">
+          <!-- Info Boxes Style 2 -->
+          <div class="info-box mb-3 bg-success">
+            <span class="info-box-icon"><i class="fas fa-thumbs-up"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Completed Tasks</span>
+              <span class="info-box-number">92</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="info-box mb-3 bg-warning">
+            <span class="info-box-icon"><i class="fas fa-tag"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pending Tasks</span>
+              <span class="info-box-number">20</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="d-flex justify-content-between">
+                <h3 class="card-title">Sites</h3>
+                <a href="javascript:void(0);">Download Report</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="d-flex">
+                <p class="d-flex flex-column">
+
+                  <span>Sites Over Time</span>
+                </p>
+
+              </div>
+              <!-- /.d-flex -->
+
+              <div class="position-relative mb-4">
+                <canvas id="sales-chart" height="200"></canvas>
+              </div>
+
+              <div class="d-flex flex-row justify-content-end">
+                <span class="mr-2">
+                  <i class="fas fa-square text-primary"></i> Site Visited
+                </span>
+
+                <span>
+                  <i class="fas fa-square text-success"></i> Completed Reports
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Notifications</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <ul class="products-list direct-chat-messages">
+                <li class="item">
+                  <div class="product-img">
+                    <a class="btn btn-primary" style="color:#FFF !important;"><i class="fa fa-eye"
+                        aria-hidden="true"></i></a>
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title"><a>New Assignment</a>
+                      <span class="float-right">16/05/2020</span></a>
+                    <span class="product-description">
+                      <strong>Layout Drawing</strong> for Site: <strong>635699</strong> is assigned
+                    </span>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="product-img">
+                    <a class="btn btn-primary" style="color:#FFF !important;"><i class="fa fa-eye"
+                        aria-hidden="true"></i></a>
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title"><a>Change Request</a>
+                      <span class="float-right">12/05/2020</span></a>
+                    <span class="product-description">
+                      <strong>TSS Entry</strong> for Site: <strong>635699</strong> is assigned
+                    </span>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="product-img">
+                    <a class="btn btn-primary" style="color:#FFF !important;"><i class="fa fa-eye"
+                        aria-hidden="true"></i></a>
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title"><a>New Assignment</a>
+                      <span class="float-right">16/05/2020</span></a>
+                    <span class="product-description">
+                      <strong>TSS Entry</strong> for Site: <strong>635695</strong> is assigned
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer text-center">
+              <a href="javascript:void(0)" class="uppercase">View All Products</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
         </div>
       </div>
     </div>
@@ -36,6 +161,90 @@
   <!-- /. Main content Ends here-->
 </div>
 <!-- /.content-wrapper -->
+
+
+
+
+<script type="text/javascript">
+  $(function () {
+    'use strict'
+
+    var ticksStyle = {
+      fontColor: '#495057',
+      fontStyle: 'bold'
+    }
+
+    var mode = 'index'
+    var intersect = true
+
+    var $salesChart = $('#sales-chart')
+    var salesChart = new Chart($salesChart, {
+      type: 'bar',
+      data: {
+        labels: ['SEPT', 'NOV', 'DEC', 'JAN', 'FEB', 'MARCH', 'APR'],
+        datasets: [
+          {
+            backgroundColor: '#007bff',
+            borderColor: '#007bff',
+            data: [10, 20, 30, 25, 27, 25, 30]
+          },
+          {
+            backgroundColor: '#28a745',
+            borderColor: '#28a745',
+            data: [10, 17, 27, 20, 18, 15, 20]
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          mode: mode,
+          intersect: intersect
+        },
+        hover: {
+          mode: mode,
+          intersect: intersect
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            // display: false,
+            gridLines: {
+              display: true,
+              lineWidth: '4px',
+              color: 'rgba(0, 0, 0, .2)',
+              zeroLineColor: 'transparent'
+            },
+            ticks: $.extend({
+              beginAtZero: true,
+
+              // Include a dollar sign in the ticks
+              callback: function (value, index, values) {
+                if (value >= 1000) {
+                  // value /= 1000
+                  // value += 'k'
+                }
+                return '' + value
+              }
+            }, ticksStyle)
+          }],
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display: false
+            },
+            ticks: ticksStyle
+          }]
+        }
+      }
+    })
+  })
+
+
+</script>
+
 
 
 {% endblock %}

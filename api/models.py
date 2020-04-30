@@ -172,3 +172,4 @@ class AssignUser(models.Model):
     assigned = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)
     task = models.CharField(max_length=100)
     comment = models.TextField(blank=True, null=True)
+    assign_at = models.DateTimeField(auto_now_add=True, null=True)

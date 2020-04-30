@@ -100,6 +100,12 @@
                     <p>Solar Analysis</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="tssassign?task=TSS Entry" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>TSS Entry</p>
+                  </a>
+              </li>
               </ul>
             </li>
 
@@ -204,7 +210,11 @@
                         <div class="sparkbar" data-color="#00a65a" data-height="20">{{ sv.visited }}</div>
                       </td>
                       <td>{{ sv.status_stage }}</td>
-                      <td><a target="_blank" href="tss-view-pdf?id={{ sv.id }}" class="btn btn-primary">View and Download</a>
+                      <td>
+                        <a target="_blank" href="tss-view-pdf?id={{ sv.id }}" class="btn btn-primary">View and
+                          Download</a>
+                          <br><br>
+                        <a href="tss-edit?id={{ sv.id }}" target="_blank" class="btn btn-primary">Edit</a>
                       </td>
                     </tr>
                     {% endfor %}

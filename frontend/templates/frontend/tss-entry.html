@@ -88,8 +88,16 @@
                 </div>
                 <div class="form-group">
                   <label>TSS Report Status Stage<font color="red">*</font></label>
-                  <input type="number" max="8" min="1" class="form-control" name="status_stage"
-                    placeholder="Enter the status stage between 1 to 8">
+                  <select name="status_stage" required>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
                 </div>
                 <br>
                 <div class="row">
@@ -545,6 +553,7 @@
     elem.type = "file";
     elem.required = true;
     elem.name = "supporting_images_" + supportingImagesNumber.value;
+    elem.accept = "image/*";
     supportingImagesElement.appendChild(elem);
 
     elem = document.createElement("br");
@@ -591,6 +600,7 @@
     idList.forEach(el => {
       document.getElementById(el).disabled = !document.getElementById(el).disabled;
       document.getElementById(el).required = !document.getElementById(el).required;
+      document.getElementById(el).value = null;
     });
   }
 
