@@ -295,64 +295,68 @@ def tssEntry(request):
                 length_side_D_option_2=length_side_D_option_2 if length_side_D_option_2 != '' else None
             )
 
-            fs=FileSystemStorage()
+            location=settings.MEDIA_ROOT + '/' + site_id + '/' + 'geographical_sketch'
+            fs=FileSystemStorage(location=location)
 
             geography=GeographicalDetails()
 
             if sketch_1 != None:
                 sketch_1=fs.save(sketch_1.name, sketch_1)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_1).verify()
-                    geography.sketch_1.save(sketch_1, File(open(settings.MEDIA_ROOT + '/' + sketch_1, 'rb')))
+                    Image.open(location + '/' + sketch_1).verify()
+                    geography.sketch_1.save(sketch_1, File(open(location + '/' + sketch_1, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_1)
+                    os.remove(location + '/' + sketch_1)
                     raise Exception("Broken File")
 
             if sketch_2 != None:
                 sketch_2=fs.save(sketch_2.name, sketch_2)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_2).verify()
-                    geography.sketch_2.save(sketch_2, File(open(settings.MEDIA_ROOT + '/' + sketch_2, 'rb')))
+                    Image.open(location + '/' + sketch_2).verify()
+                    geography.sketch_2.save(sketch_2, File(open(location + '/' + sketch_2, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_2)
+                    os.remove(location + '/' + sketch_2)
                     raise Exception("Broken File")
             
             if sketch_3 != None:
                 sketch_3=fs.save(sketch_3.name, sketch_3)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_3).verify()
-                    geography.sketch_3.save(sketch_3, File(open(settings.MEDIA_ROOT + '/' + sketch_3, 'rb')))
+                    Image.open(location + '/' + sketch_3).verify()
+                    geography.sketch_3.save(sketch_3, File(open(location + '/' + sketch_3, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_3)
+                    os.remove(location + '/' + sketch_3)
                     raise Exception("Broken File")
 
             if sketch_4 != None:
                 sketch_4=fs.save(sketch_4.name, sketch_4)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_4).verify()
-                    geography.sketch_4.save(sketch_4, File(open(settings.MEDIA_ROOT + '/' + sketch_4, 'rb')))
+                    Image.open(location + '/' + sketch_4).verify()
+                    geography.sketch_4.save(sketch_4, File(open(location + '/' + sketch_4, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_4)
+                    os.remove(location + '/' + sketch_4)
                     raise Exception("Broken File")
             
             geography.save()
+
+            location=settings.MEDIA_ROOT + '/' + site_id + '/' + 'supporting_images'
+            fs=FileSystemStorage(location=location)
             
             for i in range(1, int(supportingImagesNumber) + 1):
                 supportimgobj=SupportingImagesGeographical(geographicaldetails = geography)
                 imagename=request.FILES['supporting_images_' + str(i)]
                 imagename=fs.save(imagename.name, imagename)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + imagename).verify()
-                    supportimgobj.supporting_images.save(imagename, File(open(settings.MEDIA_ROOT + '/' + imagename, 'rb')))
+                    Image.open(location + '/' + imagename).verify()
+                    supportimgobj.supporting_images.save(imagename, File(open(location + '/' + imagename, 'rb')))
                     supportimgobj.supporting_images_caption = request.POST["supporting_images_caption" + "_" + str(i)]
                     supportimgobj.save()
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + imagename)
+                    os.remove(location + '/' + imagename)
                     raise Exception("Broken File")
         except Exception as ex:
             print(ex)
@@ -617,7 +621,6 @@ def tssEdit(request):
             dcsupply.load_current_3_comment=load_current_3_comment if load_current_3 != '' else None
             dcsupply.load_current_4_comment=load_current_4_comment if load_current_4 != '' else None
             dcsupply.save()
-
             
             dimension.front_side=front_side if front_side != '' else None
             dimension.right_side=right_side if right_side != '' else None
@@ -637,50 +640,54 @@ def tssEdit(request):
             dimension.length_side_D_option_2=length_side_D_option_2 if length_side_D_option_2 != '' else None
             dimension.save()
 
-            fs=FileSystemStorage()
+            location=settings.MEDIA_ROOT + '/' + sitevisit.site.site_id + '/' + 'geographical_sketch'
+            fs=FileSystemStorage(location=location)
 
             if sketch_1 != None:
                 sketch_1=fs.save(sketch_1.name, sketch_1)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_1).verify()
-                    geography.sketch_1.save(sketch_1, File(open(settings.MEDIA_ROOT + '/' + sketch_1, 'rb')))
+                    Image.open(location + '/' + sketch_1).verify()
+                    geography.sketch_1.save(sketch_1, File(open(location + '/' + sketch_1, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_1)
+                    os.remove(location + '/' + sketch_1)
                     raise Exception("Broken File")
 
             if sketch_2 != None:
                 sketch_2=fs.save(sketch_2.name, sketch_2)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_2).verify()
-                    geography.sketch_2.save(sketch_2, File(open(settings.MEDIA_ROOT + '/' + sketch_2, 'rb')))
+                    Image.open(location + '/' + sketch_2).verify()
+                    geography.sketch_2.save(sketch_2, File(open(location + '/' + sketch_2, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_2)
+                    os.remove(location + '/' + sketch_2)
                     raise Exception("Broken File")
             
             if sketch_3 != None:
                 sketch_3=fs.save(sketch_3.name, sketch_3)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_3).verify()
-                    geography.sketch_3.save(sketch_3, File(open(settings.MEDIA_ROOT + '/' + sketch_3, 'rb')))
+                    Image.open(location + '/' + sketch_3).verify()
+                    geography.sketch_3.save(sketch_3, File(open(location + '/' + sketch_3, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_3)
+                    os.remove(location + '/' + sketch_3)
                     raise Exception("Broken File")
 
             if sketch_4 != None:
                 sketch_4=fs.save(sketch_4.name, sketch_4)
                 try:
-                    Image.open(settings.MEDIA_ROOT + '/' + sketch_4).verify()
-                    geography.sketch_4.save(sketch_4, File(open(settings.MEDIA_ROOT + '/' + sketch_4, 'rb')))
+                    Image.open(location + '/' + sketch_4).verify()
+                    geography.sketch_4.save(sketch_4, File(open(location + '/' + sketch_4, 'rb')))
                 except Exception as ex:
                     print(ex)
-                    os.remove(settings.MEDIA_ROOT + '/' + sketch_4)
+                    os.remove(location + '/' + sketch_4)
                     raise Exception("Broken File")
             
             geography.save()
             
+            location=settings.MEDIA_ROOT + '/' + sitevisit.site.site_id + '/' + 'supporting_images'
+            fs=FileSystemStorage(location=location)
+
             supportimglist=SupportingImagesGeographical.objects.filter(geographicaldetails = geography)
             for i in range(1, int(supportingImagesNumber) + 1):
                 try:
@@ -694,8 +701,8 @@ def tssEdit(request):
                 if imagename != None:
                     imagename=fs.save(imagename.name, imagename)
                     try:
-                        Image.open(settings.MEDIA_ROOT + '/' + imagename).verify()
-                        supportimgobj.supporting_images.save(imagename, File(open(settings.MEDIA_ROOT + '/' + imagename, 'rb')))
+                        Image.open(location + '/' + imagename).verify()
+                        supportimgobj.supporting_images.save(imagename, File(open(location + '/' + imagename, 'rb')))
                         try:
                             supportimgobj.supporting_images_caption = request.POST["supporting_images_caption" + "_" + str(i)]
                         except:
@@ -703,7 +710,7 @@ def tssEdit(request):
                         supportimgobj.save()
                     except Exception as ex:
                         print(ex)
-                        os.remove(settings.MEDIA_ROOT + '/' + imagename)
+                        os.remove(location + '/' + imagename)
                         raise Exception("Broken File")
             if supportimglist.count() > int(supportingImagesNumber):
                 for i in range(int(supportingImagesNumber) - 1, supportimglist.count()):        
