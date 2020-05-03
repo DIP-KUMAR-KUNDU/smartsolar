@@ -238,7 +238,8 @@
                                             <div class="select2-purple">
                                                 <select class="select2" multiple="multiple"
                                                     data-placeholder="User name here" name="assigned"
-                                                    data-dropdown-css-class="select2-purple" style="width: 100%;" required>
+                                                    data-dropdown-css-class="select2-purple" style="width: 100%;"
+                                                    required>
                                                     {% for cu in companyuser %}
                                                     <option value={{ cu }}>{{ cu }}</option>
                                                     {% endfor %}
@@ -287,14 +288,20 @@
                                                 <th>Site ID</th>
                                                 <th>Site Current Stage</th>
                                                 <th>Assigned to</th>
+                                                <th>Comment</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for au in assignuser %}
                                             <tr>
-                                                <td>{{ au.site_visit.site.site_id }}</td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="tss-edit?id={{ au.site_visit.id }}"
+                                                        target="_blank"
+                                                        >{{ au.site_visit.site.site_id }}</a>
+                                                </td>
                                                 <td>{{ au.site_visit.status_stage }}
                                                 <td>{{ au.assigned }}</td>
+                                                <td>{{ au.comment }}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -370,7 +377,8 @@
     <script src="{% static 'frontend/plugins/moment/moment.min.js' %}"></script>
     <script src="{% static 'frontend/plugins/daterangepicker/daterangepicker.js' %}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{% static 'frontend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script
+        src="{% static 'frontend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
     <!-- Summernote -->
     <script src="{% static 'frontend/plugins/summernote/summernote-bs4.min.js' %}"></script>
     <!-- overlayScrollbars -->

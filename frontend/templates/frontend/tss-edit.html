@@ -42,41 +42,41 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="site id">Site ID<font color="red">*</font></label>
-                                    <input type="number" class="form-control" name="site_id" placeholder="Enter Site ID"
-                                        disabled value={{ sitevisit.site.site_id }}>
+                                    <input type="text" class="form-control" name="site_id" placeholder="Enter Site ID"
+                                        disabled value="{{ sitevisit.site.site_id }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="site name">Site Name<font color="red">*</font></label>
                                     <input type="text" class="form-control" name="site_name"
-                                        placeholder="Enter Site Name" disabled value={{ sitevisit.site.site_name }}>
+                                        placeholder="Enter Site Name" disabled value="{{ sitevisit.site.site_name }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="survay_date">Survay Date<font color="red">*</font></label>
                                     <input type="date" id="survay_date" name="visited_date"
-                                        value={{ sitevisit.visited|date:"Y-m-d" }} disabled>
+                                        value="{{ sitevisit.visited|date:'Y-m-d' }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="survay_time">Survay Time<font color="red">*</font></label>
                                     <input type="time" id="survay_time" name="visited_time"
-                                        value={{ sitevisit.visited|date:"H:i" }} disabled>
+                                        value="{{ sitevisit.visited|date:'H:i' }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="site region">Site Region<font color="red">*</font></label>
-                                    <select name="site_region" disabled>
-                                        <option selected>{{sitevisit.site.site_region}}</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="site_region"
+                                        placeholder="Enter Region" value={{sitevisit.site.site_region}} disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="coordinate">Site Coordinate<font color="red">*</font></label>
                                     <input type="text" class="form-control" name="site_latitude"
-                                        placeholder="Enter Latitude" value={{sitevisit.site.site_latitude}} disabled>
+                                        placeholder="Enter Latitude" value="{{sitevisit.site.site_latitude}}" disabled>
                                     <input type="text" class="form-control" name="site_longitude"
-                                        placeholder="Enter Longitude" value={{sitevisit.site.site_longitude}} disabled>
+                                        placeholder="Enter Longitude" value="{{sitevisit.site.site_longitude}}"
+                                        disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="contractor">Contractor<font color="red">*</font></label>
                                     <input type="text" class="form-control" name="contractor"
-                                        placeholder="Enter Contractor Name" value={{sitevisit.contract.contractor}}
+                                        placeholder="Enter Contractor Name" value="{{sitevisit.contract.contractor}}"
                                         disabled>
                                 </div>
                                 <div class="form-group">
@@ -84,14 +84,14 @@
                                         </font></label>
                                     <input type="text" class="form-control" name="contractor_rep"
                                         placeholder="Enter Contractor Rep. Names"
-                                        value={{sitevisit.contract.contractor_rep}} disabled>
+                                        value="{{sitevisit.contract.contractor_rep}}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="contact of contractor rep">Contact of Contractor Rep<font color="red">*
                                         </font></label>
                                     <input type="tel" class="form-control" name="contact_contractor_rep"
                                         placeholder="Enter Contractor Rep. Contact"
-                                        value={{sitevisit.contract.contact_contractor_rep}} disabled>
+                                        value="{{sitevisit.contract.contact_contractor_rep}}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>TSS Report Status Stage<font color="red">*</font></label>
@@ -147,7 +147,7 @@
                                             <div class="card-body">
                                                 <div class="form2">
                                                     <div class="group-input">
-                                                        <label>1. DC System on site?</label><br>
+                                                        <label>1.1 DC System on site?</label><br>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="icheck-primary d-inline">
@@ -174,37 +174,35 @@
                                                         </div>
                                                     </div>
                                                     <div class="group-input">
-                                                        <label>2. DC System brand and size</label><br>
+                                                        <label>1.2 DC System brand and size</label><br>
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <input type="text" class="form-control"
                                                                     name="dc_system_brand" id="dc_system_brand"
                                                                     list="dc_system_brand_list"
                                                                     placeholder="Select brand; For others please specify"
-                                                                    {% if sitevisit.details.dc_system_on_site == True %}
-                                                                    value={{sitevisit.details.dc_system_brand}} required
-                                                                    {% else %} disabled {% endif %}>
+                                                                    autocomplete="off"
+                                                                    value="{{sitevisit.details.dc_system_brand}}"
+                                                                    required>
                                                                 <datalist id="dc_system_brand_list">
-                                                                    <option value="Emerson">
-                                                                    <option value="Delta">
+
                                                                 </datalist>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <input class="form-control" name="dc_system_size"
                                                                     id="dc_system_size" list="dc_system_size_list"
                                                                     placeholder="Select size; For others please specify"
-                                                                    {% if sitevisit.details.dc_system_on_site == True %}
-                                                                    value={{sitevisit.details.dc_system_size}} required
-                                                                    {% else %} disabled {% endif %}>
+                                                                    autocomplete="off"
+                                                                    value="{{sitevisit.details.dc_system_size}}"
+                                                                    required>
                                                                 <datalist id="dc_system_size_list">
-                                                                    <option value="Single">
-                                                                    <option value="Dual">
+
                                                                 </datalist>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="group-input">
-                                                        <label>3. Is space available inside the DC Cabinet for Solar
+                                                        <label>1.3 Is space available inside the DC Cabinet for Solar
                                                             MPPT Controller to be
                                                             installed at the power compartment section</label><br>
                                                         <div class="row">
@@ -234,29 +232,29 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>4. Measure and record the available space for the MPPT
+                                                        <label>1.4 Measure and record the available space for the MPPT
                                                             controller in the DC
                                                             cabinet (<em>in Meters</em>)</label>
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <input type="number" class="form-control"
+                                                                <input type="text" class="form-control"
                                                                     id="length_dc_cabinet" name="length_dc_cabinet"
-                                                                    placeholder="Length" step="0.01"
+                                                                    placeholder="Length"
                                                                     {% if sitevisit.details.space_avail_in_dc_cabinet == True %}
-                                                                    value={{sitevisit.details.length_dc_cabinet}}
+                                                                    value="{{sitevisit.details.length_dc_cabinet}}"
                                                                     required {% else %} disabled {% endif %}>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="number" class="form-control"
+                                                                <input type="text" class="form-control"
                                                                     name="height_dc_cabinet" id="height_dc_cabinet"
-                                                                    step="0.01" placeholder="Height"
+                                                                    placeholder="Height"
                                                                     {% if sitevisit.details.space_avail_in_dc_cabinet == True %}
-                                                                    value={{sitevisit.details.height_dc_cabinet}}
+                                                                    value="{{sitevisit.details.height_dc_cabinet}}"
                                                                     required {% else %} disabled {% endif %}><br><br>
                                                             </div>
                                                         </div>
                                                         <div class="group-input">
-                                                            <label>5. Is there any tall structure, tree or building
+                                                            <label>1.5 Is there any tall structure, tree or building
                                                                 higher than the site fence
                                                                 that can cause possible shading?</label><br>
                                                             <div class="row">
@@ -285,47 +283,47 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>5.1. If Yes indicate or name the Structure
+                                                            <label>1.6 If Yes indicate or name the Structure
                                                                 type(s)</label>
                                                             <input type="text" class="form-control"
                                                                 name="tall_structure_name" id="tall_structure_name"
                                                                 placeholder="Name all the Structure Type(s)"
                                                                 {% if sitevisit.details.tall_structure == True %}
-                                                                value={{sitevisit.details.tall_structure_name}} required
-                                                                {% else %} disabled {% endif %}><br><br>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>5.2. Height of Structure AGL</label>
-                                                            <input type="number" class="form-control"
-                                                                name="tall_structure_height" id="tall_structure_height"
-                                                                placeholder="Height of Structure" step="0.01"
-                                                                {% if sitevisit.details.tall_structure == True %}
-                                                                value={{sitevisit.details.tall_structure_height}}
+                                                                value="{{sitevisit.details.tall_structure_name}}"
                                                                 required {% else %} disabled {% endif %}><br><br>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>5.3. Distance from Fence</label>
-                                                            <input type="number" class="form-control"
+                                                            <label>1.7 Height of Structure AGL</label>
+                                                            <input type="text" class="form-control"
+                                                                name="tall_structure_height" id="tall_structure_height"
+                                                                placeholder="Height of Structure"
+                                                                {% if sitevisit.details.tall_structure == True %}
+                                                                value="{{sitevisit.details.tall_structure_height}}"
+                                                                required {% else %} disabled {% endif %}><br><br>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>1.7 Distance from Fence</label>
+                                                            <input type="text" class="form-control"
                                                                 name="tall_structure_distance_fence"
                                                                 id="tall_structure_distance_fence"
                                                                 placeholder="Distance of the Structure from Fence"
-                                                                step="0.01"
                                                                 {% if sitevisit.details.tall_structure == True %}
-                                                                value={{sitevisit.details.tall_structure_distance_fence}}
+                                                                value="{{sitevisit.details.tall_structure_distance_fence}}"
                                                                 required {% else %} disabled {% endif %}><br><br>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>6. Record distance from Shed leg on which DB will be
+                                                            <label>1.8 Record distance from Shed leg on which DB will be
                                                                 fix to the DC Cabinet in
                                                                 meters</label>
-                                                            <input type="number" class="form-control"
-                                                                name="distance_shed_dc_cabinate" step="0.01"
+                                                            <input type="text" class="form-control"
+                                                                name="distance_shed_dc_cabinate"
                                                                 placeholder="Distance from Shed leg on which DB will be fix to the DC Cabinet"
-                                                                value={{sitevisit.details.distance_shed_dc_cabinate}}
-                                                                required><br><br>
+                                                                {% if not sitevisit.details.distance_shed_dc_cabinate is None %}
+                                                                value="{{sitevisit.details.distance_shed_dc_cabinate}}"
+                                                                {% endif %}><br><br>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>7. Any comment:</label>
+                                                            <label>Any comment:</label>
                                                             <textarea name="comment"
                                                                 placeholder="Enter your Comments here"
                                                                 class="form-control">{{sitevisit.details.comment}}</textarea><br><br>
@@ -358,44 +356,114 @@
                                                 <div class="card-body">
                                                     <div class="form2">
                                                         <div class="form-group">
-                                                            <label>1. System Voltage in Volt (<em>Measured between +ve
+                                                            <label>2.1 System Voltage in Volt (<em>Measured between +ve
                                                                     and -ve</em>)</label>
-                                                            <input type="number" step="0.01" class="form-control"
-                                                                name="system_voltage"
-                                                                value={{ sitevisit.dcsupply.system_voltage }}
-                                                                placeholder="System Voltage"><br><br>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="number" step="any" class="form-control"
+                                                                        name="system_voltage"
+                                                                        {% if not sitevisit.dcsupply.system_voltage is None %}
+                                                                        value="{{ sitevisit.dcsupply.system_voltage }}"
+                                                                        {% endif %} placeholder="System Voltage">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="text" class="form-control"
+                                                                        name="system_voltage_comment"
+                                                                        placeholder="Any Comment"
+                                                                        {% if not sitevisit.dcsupply.system_voltage_comment is None %}
+                                                                        value="{{ sitevisit.dcsupply.system_voltage_comment }}"
+                                                                        {% endif %}>
+                                                                </div>
+                                                            </div>
+                                                            <br><br>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>2. Load Current_1 in Ampere (<em>Measured on -ve
+                                                            <label>2.2 Load Current_1 in Ampere (<em>Measured on -ve
                                                                     cable</em>)</label>
-                                                            <input type="number" step="0.01" class="form-control"
-                                                                name="load_current_1"
-                                                                value={{ sitevisit.dcsupply.load_current_1 }}
-                                                                placeholder="Load Current_1"><br><br>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="number" step="any" class="form-control"
+                                                                        name="load_current_1"
+                                                                        {% if not sitevisit.dcsupply.load_current_1 is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_1 }}"
+                                                                        {% endif %} placeholder="Load Current_1">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="text" class="form-control"
+                                                                        name="load_current_1_comment"
+                                                                        placeholder="Any Comment"
+                                                                        {% if not sitevisit.dcsupply.load_current_1_comment is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_1_comment }}"
+                                                                        {% endif %}>
+                                                                </div>
+                                                            </div>
+                                                            <br><br>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>3. Load Current_2 in Ampere (<em>Measured on -ve
+                                                            <label>2.3 Load Current_2 in Ampere (<em>Measured on -ve
                                                                     cable</em>)</label>
-                                                            <input type="number" step="0.01" class="form-control"
-                                                                name="load_current_2"
-                                                                value={{ sitevisit.dcsupply.load_current_2 }}
-                                                                placeholder="Load Current_2"><br><br>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="number" step="any" class="form-control"
+                                                                        name="load_current_2"
+                                                                        {% if not sitevisit.dcsupply.load_current_2 is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_2 }}"
+                                                                        {% endif %} placeholder="Load Current_2">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="text" class="form-control"
+                                                                        name="load_current_2_comment"
+                                                                        placeholder="Any Comment"
+                                                                        {% if not sitevisit.dcsupply.load_current_2_comment is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_2_comment }}"
+                                                                        {% endif %}>
+                                                                </div>
+                                                            </div>
+                                                            <br><br>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>4. Load Current_3 in Ampere (<em>Measured on -ve
+                                                            <label>2.4 Load Current_3 in Ampere (<em>Measured on -ve
                                                                     cable</em>)</label>
-                                                            <input type="number" step="0.01" class="form-control"
-                                                                name="load_current_3"
-                                                                value={{ sitevisit.dcsupply.load_current_3 }}
-                                                                placeholder="Load Current_3"><br><br>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="number" step="any" class="form-control"
+                                                                        name="load_current_3"
+                                                                        {% if not sitevisit.dcsupply.load_current_3 is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_3 }}"
+                                                                        {% endif %} placeholder="Load Current_3">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="text" class="form-control"
+                                                                        name="load_current_3_comment"
+                                                                        placeholder="Any Comment"
+                                                                        {% if not sitevisit.dcsupply.load_current_3_comment is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_3_comment }}"
+                                                                        {% endif %}>
+                                                                </div>
+                                                            </div>
+                                                            <br><br>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>5. Load Current_4 in Ampere (<em>Measured on -ve
+                                                            <label>2.5 Load Current_4 in Ampere (<em>Measured on -ve
                                                                     cable</em>)</label>
-                                                            <input type="number" step="0.01" class="form-control"
-                                                                name="load_current_4"
-                                                                value={{ sitevisit.dcsupply.load_current_4 }}
-                                                                placeholder="Load Current_4"><br><br>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="number" step="any" class="form-control"
+                                                                        name="load_current_4"
+                                                                        {% if not sitevisit.dcsupply.load_current_4 is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_4 }}"
+                                                                        {% endif %} placeholder="Load Current_4">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="text" class="form-control"
+                                                                        name="load_current_4_comment"
+                                                                        placeholder="Any Comment"
+                                                                        {% if not sitevisit.dcsupply.load_current_4_comment is None %}
+                                                                        value="{{ sitevisit.dcsupply.load_current_4_comment }}"
+                                                                        {% endif %}>
+                                                                </div>
+                                                            </div>
+                                                            <br><br>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-8">
@@ -426,137 +494,157 @@
                                                 <div class="form2">
 
                                                     <div class="form-group">
-                                                        <h4><b>1. Site Dimension</b></h4>
-                                                        <label>1.1. Front side (Gate side) (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
-                                                            name="front_side" value={{ sitevisit.dimension.front_side }}
+                                                        <h4><b>Site Dimension</b></h4>
+                                                        <label>Front side (Gate side) (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control" name="front_side"
+                                                            {% if not sitevisit.dimension.front_side is None %}
+                                                            value="{{ sitevisit.dimension.front_side }}" {% endif %}
                                                             placeholder="Front side"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>1.2. Right Side (When facing the gate from outside the
+                                                        <label>Right Side (When facing the gate from outside the
                                                             site) (<em>in
                                                                 Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
-                                                            name="right_side" value={{ sitevisit.dimension.right_side }}
+                                                        <input type="text" class="form-control" name="right_side"
+                                                            {% if not sitevisit.dimension.right_side is None %}
+                                                            value="{{ sitevisit.dimension.right_side }}" {% endif %}
                                                             placeholder="Right Side"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>1.3. Back Side (opposite the gate side) (<em>in
+                                                        <label>Back Side (opposite the gate side) (<em>in
                                                                 Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
-                                                            name="back_side" value={{ sitevisit.dimension.back_side }}
+                                                        <input type="text" class="form-control" name="back_side"
+                                                            {% if not sitevisit.dimension.back_side is None %}
+                                                            value="{{ sitevisit.dimension.back_side }}" {% endif %}
                                                             placeholder="Back Side"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>1.4. Left Side (When facing the gate from outside the
+                                                        <label>Left Side (When facing the gate from outside the
                                                             site) (<em>in
                                                                 Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
-                                                            name="left_side" value={{ sitevisit.dimension.left_side }}
+                                                        <input type="text" class="form-control" name="left_side"
+                                                            {% if not sitevisit.dimension.left_side is None %}
+                                                            value="{{ sitevisit.dimension.left_side }}" {% endif %}
                                                             placeholder="Left Side"><br><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <h4><b>2. Available space around the tower</b></h4>
-                                                        <label>2.1. Distance from tower Leg/face or monopole to front
+                                                        <h4><b>Available space around the tower</b></h4>
+                                                        <label>Distance from tower Leg/face or monopole to front
                                                             side of fence (<em>in
                                                                 Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <input type="text" class="form-control"
                                                             name="distance_tower_front"
-                                                            value={{ sitevisit.dimension.distance_tower_front }}
+                                                            {% if not sitevisit.dimension.distance_tower_front is None %}
+                                                            value="{{ sitevisit.dimension.distance_tower_front }}"
+                                                            {% endif %}
                                                             placeholder="Distance from tower Leg/face or monopole to front side of fence"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>2.2. Distance from tower Leg/face or monopole to Right
+                                                        <label>Distance from tower Leg/face or monopole to Right
                                                             side of fence (<em>in
                                                                 Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <input type="text" class="form-control"
                                                             name="distance_tower_right"
-                                                            value={{ sitevisit.dimension.distance_tower_right }}
+                                                            {% if not sitevisit.dimension.distance_tower_right is None %}
+                                                            value="{{ sitevisit.dimension.distance_tower_right }}"
+                                                            {% endif %}
                                                             placeholder="Distance from tower Leg/face or monopole to Right side of fence"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>2.3. Distance from tower Leg/face or monopole to Back
+                                                        <label>Distance from tower Leg/face or monopole to Back
                                                             side of fence (<em>in
                                                                 Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <input type="text" class="form-control"
                                                             name="distance_tower_back"
-                                                            value={{ sitevisit.dimension.distance_tower_back }}
+                                                            {% if not sitevisit.dimension.distance_tower_back is None %}
+                                                            value="{{ sitevisit.dimension.distance_tower_back }}"
+                                                            {% endif %}
                                                             placeholder="Distance from tower Leg/face or monopole to Back side of fence"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>2.4. Distance from tower Leg/face or monopole to Left
+                                                        <label>Distance from tower Leg/face or monopole to Left
                                                             side of fence (<em>in
                                                                 Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <input type="text" class="form-control"
                                                             name="distance_tower_left"
-                                                            value={{ sitevisit.dimension.distance_tower_left }}
+                                                            {% if not sitevisit.dimension.distance_tower_left is None %}
+                                                            value="{{ sitevisit.dimension.distance_tower_left }}"
+                                                            {% endif %}
                                                             placeholder="Distance from tower Leg/face or monopole to Left side of fence"><br><br>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <h4><b>3. Propose location for Solar shed (Option_1)</b></h4>
+                                                        <h4><b>Propose location for Solar shed (Option_1)</b></h4>
                                                         <h6>(<em>It's recommended this field must be completed only
                                                                 after sketching and
                                                                 plotting the shades for sketch 3</em>)</h6>
-                                                        <label>3.1. Length of Side_A (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_A (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_A_option_1"
-                                                            value={{ sitevisit.dimension.length_side_A_option_1 }}
-                                                            placeholder="Length of Side_A"><br>
+                                                            {% if not sitevisit.dimension.length_side_A_option_1 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_A_option_1 }}"
+                                                            {% endif %} placeholder="Length of Side_A"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>3.2. Length of Side_B (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_B (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_B_option_1"
-                                                            value={{ sitevisit.dimension.length_side_B_option_1 }}
-                                                            placeholder="Length of Side_B"><br>
+                                                            {% if not sitevisit.dimension.length_side_B_option_1 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_B_option_1 }}"
+                                                            {% endif %} placeholder="Length of Side_B"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>3.3. Length of Side_C (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_C (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_C_option_1"
-                                                            value={{ sitevisit.dimension.length_side_C_option_1 }}
-                                                            placeholder="Length of Side_C"><br>
+                                                            {% if not sitevisit.dimension.length_side_C_option_1 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_C_option_1 }}"
+                                                            {% endif %} placeholder="Length of Side_C"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>3.4. Length of Side_D (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_D (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_D_option_1"
-                                                            value={{ sitevisit.dimension.length_side_D_option_1 }}
-                                                            placeholder="Length of Side_D"><br><br>
+                                                            {% if not sitevisit.dimension.length_side_D_option_1 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_D_option_1 }}"
+                                                            {% endif %} placeholder="Length of Side_D"><br><br>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <h4><b>4. Propose location for Solar shed (Option_2)</b></h4>
+                                                        <h4><b>Propose location for Solar shed (Option_2)</b></h4>
                                                         <h6>(<em>It's recommended this field must be completed only
                                                                 after sketching and
                                                                 plotting the shades for sketch 3</em>)</h6>
-                                                        <label>4.1. Length of Side_A (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_A (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_A_option_2"
-                                                            value={{ sitevisit.dimension.length_side_A_option_2 }}
-                                                            placeholder="Length of Side_A"><br>
+                                                            {% if not sitevisit.dimension.length_side_A_option_2 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_A_option_2 }}"
+                                                            {% endif %} placeholder="Length of Side_A"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>4.2. Length of Side_B (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_B (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_B_option_2"
-                                                            value={{ sitevisit.dimension.length_side_B_option_2 }}
-                                                            placeholder="Length of Side_B"><br>
+                                                            {% if not sitevisit.dimension.length_side_B_option_2 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_B_option_2 }}"
+                                                            {% endif %} placeholder="Length of Side_B"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>4.3. Length of Side_C (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_C (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_C_option_2"
-                                                            value={{ sitevisit.dimension.length_side_C_option_2 }}
-                                                            placeholder="Length of Side_C"><br>
+                                                            {% if not sitevisit.dimension.length_side_C_option_2 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_C_option_2 }}"
+                                                            {% endif %} placeholder="Length of Side_C"><br>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>4.4. Length of Side_D (<em>in Meters</em>)</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <label>Length of Side_D (<em>in Meters</em>)</label>
+                                                        <input type="text" class="form-control"
                                                             name="length_side_D_option_2"
-                                                            value={{ sitevisit.dimension.length_side_D_option_2 }}
-                                                            placeholder="Length of Side_D"><br><br>
+                                                            {% if not sitevisit.dimension.length_side_D_option_2 is None %}
+                                                            value="{{ sitevisit.dimension.length_side_D_option_2 }}"
+                                                            {% endif %} placeholder="Length of Side_D"><br><br>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-8">
@@ -584,7 +672,7 @@
                                             <div class="card-body">
                                                 <div class="form2">
                                                     <div class="form-group">
-                                                        <label>1. Sketch block diagram of site layout</label>
+                                                        <label>4.1 Sketch block diagram of site layout</label>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <img alt="No Image"
@@ -599,7 +687,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>2. Site tower and its shade at every 20 minutes for 2
+                                                        <label>4.2 Site tower and its shade at every 20 minutes for 2
                                                             hours Plot</label>
                                                         <div class="row">
                                                             <div class="col-md-4">
@@ -615,7 +703,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>3. Your prefered PV shed location on the site
+                                                        <label>4.3 Your prefered PV shed location on the site
                                                             sketch</label>
                                                         <div class="row">
                                                             <div class="col-md-4">
@@ -631,7 +719,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>4. Locality map ofthe location indicating available roads
+                                                        <label>4.4 Locality map ofthe location indicating available
+                                                            roads
                                                             and any major land
                                                             marks sketch</label>
                                                         <div class="row">
@@ -671,8 +760,8 @@
                                     <div id="collapseFive" class="panel-collapse collapse">
                                         <div class="card-body">
                                             <div class="form2">
-                                                <input type="number" name="supportingImagesNumber" {% if extra_imgs %}
-                                                    value={{ extra_imgs.count }} {% else %} value="0" {% endif %}
+                                                <input type="text" name="supportingImagesNumber" {% if extra_imgs %}
+                                                    value="{{ extra_imgs.count }}" {% else %} value="0" {% endif %}
                                                     id="supportingImagesNumber" hidden required>
                                                 <button type="button" class="btn btn-primary"
                                                     id="supportingImagesAdd"><b>Add More Images
@@ -698,7 +787,8 @@
                                                         </div><br>
                                                         <textarea placeholder="Enter caption for this image"
                                                             class="form-control"
-                                                            name="supporting_images_caption_{{forloop.counter}}" required>{{extimg.supporting_images_caption}}</textarea>
+                                                            name="supporting_images_caption_{{forloop.counter}}"
+                                                            required>{{extimg.supporting_images_caption}}</textarea>
                                                     </div>
                                                     {% endfor %}
                                                     {% endif %}
@@ -786,6 +876,17 @@
     });
 </script>
 
+<script>
+    if(document.getElementById("Yes1").checked)
+    {
+        document.getElementById("dc_system_brand_list").innerHTML = `<option value="Emerson"><option value="Delta">`;
+        document.getElementById("dc_system_size_list").innerHTML = `<option value="Single"><option value="Dual">`;
+    } else {
+        document.getElementById("dc_system_brand_list").innerHTML = `<option value="Others"><option value="Unknown"><option value="Not specified yet">`;
+        document.getElementById("dc_system_size_list").innerHTML = `<option value="Others"><option value="Unknown"><option value="Not specified yet">`;
+    }
+</script>
+
 
 <script>
     const disabledRequied = idList => {
@@ -798,10 +899,12 @@
 
 
     document.getElementById("Yes1").addEventListener("change", () => {
-        disabledRequied(['dc_system_brand', 'dc_system_size']);
+        document.getElementById("dc_system_brand_list").innerHTML = `<option value="Emerson"><option value="Delta">`;
+        document.getElementById("dc_system_size_list").innerHTML = `<option value="Single"><option value="Dual">`;
     });
     document.getElementById("No1").addEventListener("change", () => {
-        disabledRequied(['dc_system_brand', 'dc_system_size']);
+        document.getElementById("dc_system_brand_list").innerHTML = `<option value="Others"><option value="Unknown"><option value="Not specified yet">`;
+        document.getElementById("dc_system_size_list").innerHTML = `<option value="Others"><option value="Unknown"><option value="Not specified yet">`;
     });
 
     document.getElementById("Yes2").addEventListener("change", () => {

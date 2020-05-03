@@ -99,7 +99,8 @@ def tssAssign(request):
             # print(assigned)
             # print(comment)
             # print(assu)
-            if CompanyUser.objects.get(user=assu).role != 'ASSIGN':
+            CompanyUser.objects.get(user=assu).role
+            if assu.is_superuser:
                 raise Exception("Bad role")
             AssignUser.objects.create(
                 site_visit = SiteVisit.objects.get(id=site_visit),
@@ -146,6 +147,25 @@ def tssUpdateSmart(request):
     except Exception as ex:
         print(ex)
         return bad_request(request, ex)
+
+
+
+@login_required(login_url='/')
+def tssStatusUpdateSmart(request):
+    try:
+        status_stage=int(request.GET.get('status_stage'))
+        visit_id=request.GET.get('visit_id')
+        print(status_stage)
+        print(visit_id)
+        if not (1 <= status_stage and status_stage <= 8):
+            raise Exception("Bad Status Stage")
+        sitevisitobj = SiteVisit.objects.get(id=visit_id)
+        sitevisitobj.status_stage = int(status_stage)
+        sitevisitobj.save()
+        return HttpResponse(status=200)
+    except Exception as ex:
+        print(ex)
+        return HttpResponse(status=400)
 
 
 

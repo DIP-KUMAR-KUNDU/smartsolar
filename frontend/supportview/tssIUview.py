@@ -118,6 +118,26 @@ def tssEntry(request):
         except:
             load_current_4 = ''
         try:
+            system_voltage_comment = request.POST['system_voltage_comment']
+        except:
+            system_voltage_comment = ''
+        try:
+            load_current_1_comment = request.POST['load_current_1_comment']
+        except:
+            load_current_1_comment = ''
+        try:
+            load_current_2_comment = request.POST['load_current_2_comment']
+        except:
+            load_current_2_comment = ''
+        try:
+            load_current_3_comment = request.POST['load_current_3_comment']
+        except:
+            load_current_3_comment = ''
+        try:
+            load_current_4_comment = request.POST['load_current_4_comment']
+        except:
+            load_current_4_comment = ''
+        try:
             front_side = request.POST['front_side']
         except:
             front_side = ''
@@ -250,6 +270,11 @@ def tssEntry(request):
                 load_current_2=load_current_2 if load_current_2 != '' else None,
                 load_current_3=load_current_3 if load_current_3 != '' else None,
                 load_current_4=load_current_4 if load_current_4 != '' else None,
+                system_voltage_comment=system_voltage_comment if system_voltage_comment != '' else None,
+                load_current_1_comment=load_current_1_comment if load_current_1_comment != '' else None,
+                load_current_2_comment=load_current_2_comment if load_current_2_comment != '' else None,
+                load_current_3_comment=load_current_3_comment if load_current_3_comment != '' else None,
+                load_current_4_comment=load_current_4_comment if load_current_4_comment != '' else None
             )
             dimension=SiteDimensionDetails.objects.create(
                 front_side=front_side if front_side != '' else None,
@@ -446,6 +471,26 @@ def tssEdit(request):
         except:
             load_current_4 = ''
         try:
+            system_voltage_comment = request.POST['system_voltage_comment']
+        except:
+            system_voltage_comment = ''
+        try:
+            load_current_1_comment = request.POST['load_current_1_comment']
+        except:
+            load_current_1_comment = ''
+        try:
+            load_current_2_comment = request.POST['load_current_2_comment']
+        except:
+            load_current_2_comment = ''
+        try:
+            load_current_3_comment = request.POST['load_current_3_comment']
+        except:
+            load_current_3_comment = ''
+        try:
+            load_current_4_comment = request.POST['load_current_4_comment']
+        except:
+            load_current_4_comment = ''
+        try:
             front_side = request.POST['front_side']
         except:
             front_side = ''
@@ -566,6 +611,11 @@ def tssEdit(request):
             dcsupply.load_current_2=load_current_2 if load_current_2 != '' else None
             dcsupply.load_current_3=load_current_3 if load_current_3 != '' else None
             dcsupply.load_current_4=load_current_4 if load_current_4 != '' else None
+            dcsupply.system_voltage_comment=system_voltage_comment if system_voltage != '' else None
+            dcsupply.load_current_1_comment=load_current_1_comment if load_current_1 != '' else None
+            dcsupply.load_current_2_comment=load_current_2_comment if load_current_2 != '' else None
+            dcsupply.load_current_3_comment=load_current_3_comment if load_current_3 != '' else None
+            dcsupply.load_current_4_comment=load_current_4_comment if load_current_4 != '' else None
             dcsupply.save()
 
             

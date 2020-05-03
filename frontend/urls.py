@@ -12,4 +12,5 @@ urlpatterns = [
     path('tssassign', views.tssAssign, name='tssAssign'),
     path('tss-view-pdf', views.tssViewSmartPDF, name='tssViewSmartPDF'),
     path('tss-edit', views.tssUpdateSmart, name='tssUpdateSmart'),
+    path('tss-status-edit', views.tssStatusUpdateSmart, name='tssStatusUpdateSmart'),
 ]

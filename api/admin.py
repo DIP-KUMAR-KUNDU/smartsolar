@@ -43,11 +43,11 @@ admin.site.register(SiteDetails, SiteDetailsAdmin)
 
 class DCSupplyParameterAdmin(admin.ModelAdmin):
     list_display = ('id'
-,'system_voltage'
-,'load_current_1'
-,'load_current_2'
-,'load_current_3'
-,'load_current_4')
+,'system_voltage', 'system_voltage_comment',
+'load_current_1', 'load_current_1_comment',
+'load_current_2', 'load_current_2_comment',
+'load_current_3', 'load_current_3_comment',
+'load_current_4', 'load_current_4_comment')
 admin.site.register(DCSupplyParameter, DCSupplyParameterAdmin)
 
 

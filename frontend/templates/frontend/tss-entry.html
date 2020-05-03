@@ -42,7 +42,7 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="site id">Site ID<font color="red">*</font></label>
-                  <input type="number" class="form-control" name="site_id" placeholder="Enter Site ID" required>
+                  <input type="text" class="form-control" name="site_id" placeholder="Enter Site ID" required>
                 </div>
                 <div class="form-group">
                   <label for="site name">Site Name<font color="red">*</font></label>
@@ -58,13 +58,7 @@
                 </div>
                 <div class="form-group">
                   <label for="site region">Site Region<font color="red">*</font></label>
-                  <select name="site_region" required>
-                    <option value="region1">Region 1</option>
-                    <option value="region2">Region 2</option>
-                    <option value="region3">Region 3</option>
-                    <option value="region4">Region 4</option>
-                    <option value="region5">Region 5</option>
-                  </select>
+                  <input type="text" class="form-control" name="site_region" placeholder="Enter Region" required>
                 </div>
                 <div class="form-group">
                   <label for="coordinate">Site Coordinate<font color="red">*</font></label>
@@ -131,7 +125,7 @@
                       <div class="card-body">
                         <div class="form2">
                           <div class="group-input">
-                            <label>1. DC System on site?</label><br>
+                            <label>1.1 DC System on site?</label><br>
                             <div class="row">
                               <div class="col-md-4">
                                 <div class="icheck-primary d-inline">
@@ -152,30 +146,28 @@
                             </div>
                           </div>
                           <div class="group-input">
-                            <label>2. DC System brand and size</label><br>
+                            <label>1.2 DC System brand and size</label><br>
                             <div class="row">
                               <div class="col-md-6">
-                                <input type="text" class="form-control" name="dc_system_brand" id="dc_system_brand"
+                                <input type="text" class="form-control" name="dc_system_brand" id="dc_system_brand" autocomplete="off"
                                   list="dc_system_brand_list" placeholder="Select brand; For others please specify"
-                                  disabled>
+                                  required>
                                 <datalist id="dc_system_brand_list">
-                                  <option value="Emerson">
-                                  <option value="Delta">
+
                                 </datalist>
                               </div>
                               <div class="col-md-6">
-                                <input class="form-control" name="dc_system_size" id="dc_system_size"
+                                <input class="form-control" name="dc_system_size" id="dc_system_size" autocomplete="off"
                                   list="dc_system_size_list" placeholder="Select size; For others please specify"
-                                  disabled>
+                                  required>
                                 <datalist id="dc_system_size_list">
-                                  <option value="Single">
-                                  <option value="Dual">
+
                                 </datalist>
                               </div>
                             </div>
                           </div>
                           <div class="group-input">
-                            <label>3. Is space available inside the DC Cabinet for Solar MPPT Controller to be
+                            <label>1.3 Is space available inside the DC Cabinet for Solar MPPT Controller to be
                               installed at the power compartment section</label><br>
                             <div class="row">
                               <div class="col-md-4">
@@ -197,20 +189,20 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <label>4. Measure and record the available space for the MPPT controller in the DC
+                            <label>1.4 Measure and record the available space for the MPPT controller in the DC
                               cabinet (<em>in Meters</em>)</label>
                             <div class="row">
                               <div class="col-md-4">
-                                <input type="number" class="form-control" id="length_dc_cabinet"
-                                  name="length_dc_cabinet" placeholder="Length" step="0.01" disabled>
+                                <input type="text" class="form-control" id="length_dc_cabinet" name="length_dc_cabinet"
+                                  placeholder="Length" disabled>
                               </div>
                               <div class="col-md-4">
-                                <input type="number" class="form-control" name="height_dc_cabinet"
-                                  id="height_dc_cabinet" disabled step="0.01" placeholder="Height"><br><br>
+                                <input type="text" class="form-control" name="height_dc_cabinet" id="height_dc_cabinet"
+                                  disabled placeholder="Height"><br><br>
                               </div>
                             </div>
                             <div class="group-input">
-                              <label>5. Is there any tall structure, tree or building higher than the site fence
+                              <label>1.5 Is there any tall structure, tree or building higher than the site fence
                                 that can cause possible shading?</label><br>
                               <div class="row">
                                 <div class="col-md-4">
@@ -232,31 +224,29 @@
                               </div>
                             </div>
                             <div class="form-group">
-                              <label>5.1. If Yes indicate or name the Structure type(s)</label>
+                              <label>1.6 If Yes indicate or name the Structure type(s)</label>
                               <input type="text" class="form-control" name="tall_structure_name"
                                 id="tall_structure_name" placeholder="Name all the Structure Type(s)" disabled><br><br>
                             </div>
                             <div class="form-group">
-                              <label>5.2. Height of Structure AGL</label>
-                              <input type="number" class="form-control" name="tall_structure_height"
-                                id="tall_structure_height" placeholder="Height of Structure" step="0.01"
+                              <label>1.7 Height of Structure AGL</label>
+                              <input type="text" class="form-control" name="tall_structure_height"
+                                id="tall_structure_height" placeholder="Height of Structure" disabled><br><br>
+                            </div>
+                            <div class="form-group">
+                              <label>1.7 Distance from Fence</label>
+                              <input type="text" class="form-control" name="tall_structure_distance_fence"
+                                id="tall_structure_distance_fence" placeholder="Distance of the Structure from Fence"
                                 disabled><br><br>
                             </div>
                             <div class="form-group">
-                              <label>5.3. Distance from Fence</label>
-                              <input type="number" class="form-control" name="tall_structure_distance_fence"
-                                id="tall_structure_distance_fence" placeholder="Distance of the Structure from Fence"
-                                step="0.01" disabled><br><br>
-                            </div>
-                            <div class="form-group">
-                              <label>6. Record distance from Shed leg on which DB will be fix to the DC Cabinet in
+                              <label>1.8 Record distance from Shed leg on which DB will be fix to the DC Cabinet in
                                 meters</label>
-                              <input type="number" class="form-control" name="distance_shed_dc_cabinate" step="0.01"
-                                placeholder="Distance from Shed leg on which DB will be fix to the DC Cabinet"
-                                required><br><br>
+                              <input type="text" class="form-control" name="distance_shed_dc_cabinate"
+                                placeholder="Distance from Shed leg on which DB will be fix to the DC Cabinet"><br><br>
                             </div>
                             <div class="form-group">
-                              <label>7. Any comment:</label>
+                              <label>Any comment:</label>
                               <textarea name="comment" placeholder="Enter your Comments here"
                                 class="form-control"></textarea><br><br>
                             </div>
@@ -286,29 +276,54 @@
                         <div class="card-body">
                           <div class="form2">
                             <div class="form-group">
-                              <label>1. System Voltage in Volt (<em>Measured between +ve and -ve</em>)</label>
-                              <input type="number" step="0.01" class="form-control" name="system_voltage"
-                                placeholder="System Voltage"><br><br>
+                              <label>2.1 System Voltage in Volt (<em>Measured between +ve and -ve</em>)</label>
+                              <div class="row">
+                                <div class="col-md-6"><input type="number" class="form-control" name="system_voltage"
+                                    step="any" placeholder="System Voltage"></div>
+                                <div class="col-md-6"><input type="text" class="form-control" name="system_voltage_comment"
+                                    placeholder="Any Comment"></div>
+                              </div>
+                              <br><br>
                             </div>
                             <div class="form-group">
-                              <label>2. Load Current_1 in Ampere (<em>Measured on -ve cable</em>)</label>
-                              <input type="number" step="0.01" class="form-control" name="load_current_1"
-                                placeholder="Load Current_1"><br><br>
+                              <label>2.2 Load Current_1 in Ampere (<em>Measured on -ve cable</em>)</label>
+                              <div class="row">
+                                <div class="col-md-6"><input type="number" class="form-control" name="load_current_1"
+                                    step="any" placeholder="Load Current_1"></div>
+                                <div class="col-md-6"><input type="text" class="form-control" name="load_current_1_comment"
+                                    placeholder="Any Comment"></div>
+                              </div>
+                              <br><br>
                             </div>
                             <div class="form-group">
-                              <label>3. Load Current_2 in Ampere (<em>Measured on -ve cable</em>)</label>
-                              <input type="number" step="0.01" class="form-control" name="load_current_2"
-                                placeholder="Load Current_2"><br><br>
+                              <label>2.3 Load Current_2 in Ampere (<em>Measured on -ve cable</em>)</label>
+                              <div class="row">
+                                <div class="col-md-6"><input type="number" class="form-control" name="load_current_2"
+                                    step="any" placeholder="Load Current_2"></div>
+                                <div class="col-md-6"><input type="text" class="form-control" name="load_current_2_comment"
+                                    placeholder="Any Comment"></div>
+                              </div>
+                              <br><br>
                             </div>
                             <div class="form-group">
-                              <label>4. Load Current_3 in Ampere (<em>Measured on -ve cable</em>)</label>
-                              <input type="number" step="0.01" class="form-control" name="load_current_3"
-                                placeholder="Load Current_3"><br><br>
+                              <label>2.4 Load Current_3 in Ampere (<em>Measured on -ve cable</em>)</label>
+                              <div class="row">
+                                <div class="col-md-6"><input type="number" class="form-control" name="load_current_3"
+                                    step="any" placeholder="Load Current_3"></div>
+                                <div class="col-md-6"><input type="text" class="form-control" name="load_current_3_comment"
+                                    placeholder="Any Comment"></div>
+                              </div>
+                              <br><br>
                             </div>
                             <div class="form-group">
-                              <label>5. Load Current_4 in Ampere (<em>Measured on -ve cable</em>)</label>
-                              <input type="number" step="0.01" class="form-control" name="load_current_4"
-                                placeholder="Load Current_4"><br><br>
+                              <label>2.5 Load Current_4 in Ampere (<em>Measured on -ve cable</em>)</label>
+                              <div class="row">
+                                <div class="col-md-6"><input type="number" class="form-control" name="load_current_4"
+                                    step="any" placeholder="Load Current_4"></div>
+                                <div class="col-md-6"><input type="text" class="form-control" name="load_current_4_comment"
+                                    placeholder="Any Comment"></div>
+                              </div>
+                              <br><br>
                             </div>
                             <div class="row">
                               <div class="col-md-8">
@@ -337,99 +352,95 @@
                         <div class="form2">
 
                           <div class="form-group">
-                            <h4><b>1. Site Dimension</b></h4>
-                            <label>1.1. Front side (Gate side) (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="front_side"
-                              placeholder="Front side"><br>
+                            <h4><b>3. Site Dimension Detail</b></h4>
+                            <label>Front side (Gate side) (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="front_side" placeholder="Front side"><br>
                           </div>
                           <div class="form-group">
-                            <label>1.2. Right Side (When facing the gate from outside the site) (<em>in
+                            <label>Right Side (When facing the gate from outside the site) (<em>in
                                 Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="right_side"
-                              placeholder="Right Side"><br>
+                            <input type="text" class="form-control" name="right_side" placeholder="Right Side"><br>
                           </div>
                           <div class="form-group">
-                            <label>1.3. Back Side (opposite the gate side) (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="back_side"
-                              placeholder="Back Side"><br>
+                            <label>Back Side (opposite the gate side) (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="back_side" placeholder="Back Side"><br>
                           </div>
                           <div class="form-group">
-                            <label>1.4. Left Side (When facing the gate from outside the site) (<em>in
+                            <label>Left Side (When facing the gate from outside the site) (<em>in
                                 Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="left_side"
-                              placeholder="Left Side"><br><br>
+                            <input type="text" class="form-control" name="left_side" placeholder="Left Side"><br><br>
                           </div>
                           <div class="form-group">
-                            <h4><b>2. Available space around the tower</b></h4>
-                            <label>2.1. Distance from tower Leg/face or monopole to front side of fence (<em>in
+                            <h4><b>Available space around the tower</b></h4>
+                            <label>Distance from tower Leg/face or monopole to front side of fence (<em>in
                                 Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="distance_tower_front"
+                            <input type="text" class="form-control" name="distance_tower_front"
                               placeholder="Distance from tower Leg/face or monopole to front side of fence"><br>
                           </div>
                           <div class="form-group">
-                            <label>2.2. Distance from tower Leg/face or monopole to Right side of fence (<em>in
+                            <label>Distance from tower Leg/face or monopole to Right side of fence (<em>in
                                 Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="distance_tower_right"
+                            <input type="text" class="form-control" name="distance_tower_right"
                               placeholder="Distance from tower Leg/face or monopole to Right side of fence"><br>
                           </div>
                           <div class="form-group">
-                            <label>2.3. Distance from tower Leg/face or monopole to Back side of fence (<em>in
+                            <label>Distance from tower Leg/face or monopole to Back side of fence (<em>in
                                 Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="distance_tower_back"
+                            <input type="text" class="form-control" name="distance_tower_back"
                               placeholder="Distance from tower Leg/face or monopole to Back side of fence"><br>
                           </div>
                           <div class="form-group">
-                            <label>2.4. Distance from tower Leg/face or monopole to Left side of fence (<em>in
+                            <label>Distance from tower Leg/face or monopole to Left side of fence (<em>in
                                 Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="distance_tower_left"
+                            <input type="text" class="form-control" name="distance_tower_left"
                               placeholder="Distance from tower Leg/face or monopole to Left side of fence"><br><br>
                           </div>
 
                           <div class="form-group">
-                            <h4><b>3. Propose location for Solar shed (Option_1)</b></h4>
+                            <h4><b>Propose location for Solar shed (Option_1)</b></h4>
                             <h6>(<em>It's recommended this field must be completed only after sketching and
                                 plotting the shades for sketch 3</em>)</h6>
-                            <label>3.1. Length of Side_A (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_A_option_1"
+                            <label>Length of Side_A (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_A_option_1"
                               placeholder="Length of Side_A"><br>
                           </div>
                           <div class="form-group">
-                            <label>3.2. Length of Side_B (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_B_option_1"
+                            <label>Length of Side_B (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_B_option_1"
                               placeholder="Length of Side_B"><br>
                           </div>
                           <div class="form-group">
-                            <label>3.3. Length of Side_C (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_C_option_1"
+                            <label>Length of Side_C (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_C_option_1"
                               placeholder="Length of Side_C"><br>
                           </div>
                           <div class="form-group">
-                            <label>3.4. Length of Side_D (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_D_option_1"
+                            <label>Length of Side_D (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_D_option_1"
                               placeholder="Length of Side_D"><br><br>
                           </div>
 
                           <div class="form-group">
-                            <h4><b>4. Propose location for Solar shed (Option_2)</b></h4>
+                            <h4><b>Propose location for Solar shed (Option_2)</b></h4>
                             <h6>(<em>It's recommended this field must be completed only after sketching and
                                 plotting the shades for sketch 3</em>)</h6>
-                            <label>4.1. Length of Side_A (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_A_option_2"
+                            <label>Length of Side_A (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_A_option_2"
                               placeholder="Length of Side_A"><br>
                           </div>
                           <div class="form-group">
-                            <label>4.2. Length of Side_B (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_B_option_2"
+                            <label>Length of Side_B (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_B_option_2"
                               placeholder="Length of Side_B"><br>
                           </div>
                           <div class="form-group">
-                            <label>4.3. Length of Side_C (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_C_option_2"
+                            <label>Length of Side_C (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_C_option_2"
                               placeholder="Length of Side_C"><br>
                           </div>
                           <div class="form-group">
-                            <label>4.4. Length of Side_D (<em>in Meters</em>)</label>
-                            <input type="number" step="0.01" class="form-control" name="length_side_D_option_2"
+                            <label>Length of Side_D (<em>in Meters</em>)</label>
+                            <input type="text" class="form-control" name="length_side_D_option_2"
                               placeholder="Length of Side_D"><br><br>
                           </div>
                           <div class="row">
@@ -457,20 +468,19 @@
                       <div class="card-body">
                         <div class="form2">
                           <div class="form-group">
-                            <label>1. Sketch block diagram of site layout</label>
+                            <label>4.1 Sketch block diagram of site layout</label>
                             <input type="file" accept="image/*" id="site layout" name="sketch_1"><br>
                           </div>
                           <div class="form-group">
-                            <label>2. Site tower and its shade at every 20 minutes for 2 hours Plot</label>
+                            <label>4.2 Site tower and its shade at every 20 minutes for 2 hours Plot</label>
                             <input type="file" accept="image/*" id="site shade sketch" name="sketch_2"><br>
                           </div>
                           <div class="form-group">
-                            <label>3. Your prefered PV shed location on the site sketch</label>
-                            <input type="file" accept="image/*" id="site pv location sketch" name="sketch_3"
-                            ><br>
+                            <label>4.3 Your prefered PV shed location on the site sketch</label>
+                            <input type="file" accept="image/*" id="site pv location sketch" name="sketch_3"><br>
                           </div>
                           <div class="form-group">
-                            <label>4. Locality map ofthe location indicating available roads and any major land
+                            <label>4.4 Locality map ofthe location indicating available roads and any major land
                               marks sketch</label>
                             <input type="file" accept="image/*" id="site map sketch" name="sketch_4"><br><br>
                           </div>
@@ -499,7 +509,7 @@
                   <div id="collapseFive" class="panel-collapse collapse">
                     <div class="card-body">
                       <div class="form2">
-                        <input type="number" name="supportingImagesNumber" value="0" id="supportingImagesNumber" hidden
+                        <input type="text" name="supportingImagesNumber" value="0" id="supportingImagesNumber" hidden
                           required>
                         <button type="button" class="btn btn-primary" id="supportingImagesAdd"><b>Add More Images
                             +</b></button>
@@ -604,14 +614,15 @@
     });
   }
 
-  var flag1 = flag2 = flag3 = false;
+  var flag2 = flag3 = false;
 
   document.getElementById("Yes1").addEventListener("change", () => {
-    disabledRequied(['dc_system_brand', 'dc_system_size']);
-    flag1 = true;
+    document.getElementById("dc_system_brand_list").innerHTML = `<option value="Emerson"><option value="Delta">`;
+    document.getElementById("dc_system_size_list").innerHTML = `<option value="Single"><option value="Dual">`;
   });
   document.getElementById("No1").addEventListener("change", () => {
-    if (flag1) disabledRequied(['dc_system_brand', 'dc_system_size']);
+    document.getElementById("dc_system_brand_list").innerHTML = `<option value="Others"><option value="Unknown"><option value="Not specified yet">`;
+    document.getElementById("dc_system_size_list").innerHTML = `<option value="Others"><option value="Unknown"><option value="Not specified yet">`;
   });
 
   document.getElementById("Yes2").addEventListener("change", () => {
@@ -659,7 +670,7 @@
     try {
       document.querySelectorAll("input[type=file]").forEach((fileElement) => {
         //console.log(fileElement);
-        if(fileElement.value)
+        if (fileElement.value)
           if (!isValidimageFile(fileElement.value))
             throw "Not a proper image";
       });

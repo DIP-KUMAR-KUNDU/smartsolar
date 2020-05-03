@@ -67,10 +67,10 @@ class SiteDetails(models.Model):
     space_avail_in_dc_cabinet = models.BooleanField(
         verbose_name="Is space available inside the DC Cabinet for Solar MPPT Controller to be installed at the power compartment section",
         blank=True, null=True)
-    length_dc_cabinet = models.FloatField(
+    length_dc_cabinet = models.CharField(max_length=100,
         verbose_name="Measure and record the available space(LENGTH (Meter)) for the MPPT controller in the DC cabinet",
         blank=True, null=True)
-    height_dc_cabinet = models.FloatField(
+    height_dc_cabinet = models.CharField(max_length=100,
         verbose_name="Measure and record the available space(HEIGHT (Meter)) for the MPPT controller in the DC cabinet",
         blank=True, null=True)
     tall_structure = models.BooleanField(
@@ -79,13 +79,13 @@ class SiteDetails(models.Model):
     tall_structure_name = models.CharField(
         verbose_name="If there any tall structure, indicate or name the structure type(s)",
         max_length=100, blank=True, null=True)
-    tall_structure_height = models.FloatField(
+    tall_structure_height = models.CharField(max_length=100,
         verbose_name="If there any tall structure, specify the HEIGHT (Meter)",
         blank=True, null=True)
-    tall_structure_distance_fence = models.FloatField(
+    tall_structure_distance_fence = models.CharField(max_length=100,
         verbose_name="If there any tall structure, specify the DISTANCE (Meter) of the structure from the site fence",
         blank=True, null=True)
-    distance_shed_dc_cabinate = models.FloatField(
+    distance_shed_dc_cabinate = models.CharField(max_length=100,
         verbose_name="Record DISTANCE (Meter) from Shed leg on which DB will be fix to the DC Cabinet ",
         blank=True, null=True)
     comment = models.TextField(blank=True, null=True)
@@ -100,10 +100,15 @@ class SiteDetails(models.Model):
 class DCSupplyParameter(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     system_voltage = models.FloatField(blank=True, null=True)
+    system_voltage_comment = models.CharField(max_length=100, blank=True, null=True)
     load_current_1 = models.FloatField(blank=True, null=True)
+    load_current_1_comment = models.CharField(max_length=100, blank=True, null=True)
     load_current_2 = models.FloatField(blank=True, null=True)
+    load_current_2_comment = models.CharField(max_length=100, blank=True, null=True)
     load_current_3 = models.FloatField(blank=True, null=True)
+    load_current_3_comment = models.CharField(max_length=100, blank=True, null=True)
     load_current_4 = models.FloatField(blank=True, null=True)
+    load_current_4_comment = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return "DCSupplyParameter object " + str(self.id)
@@ -111,22 +116,22 @@ class DCSupplyParameter(models.Model):
 
 class SiteDimensionDetails(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    front_side = models.FloatField(blank=True, null=True)
-    right_side = models.FloatField(blank=True, null=True)
-    back_side = models.FloatField(blank=True, null=True)
-    left_side = models.FloatField(blank=True, null=True)
-    distance_tower_front = models.FloatField(blank=True, null=True)
-    distance_tower_right = models.FloatField(blank=True, null=True)
-    distance_tower_back = models.FloatField(blank=True, null=True)
-    distance_tower_left = models.FloatField(blank=True, null=True)
-    length_side_A_option_1 = models.FloatField(blank=True, null=True)
-    length_side_B_option_1 = models.FloatField(blank=True, null=True)
-    length_side_C_option_1 = models.FloatField(blank=True, null=True)
-    length_side_D_option_1 = models.FloatField(blank=True, null=True)
-    length_side_A_option_2 = models.FloatField(blank=True, null=True)
-    length_side_B_option_2 = models.FloatField(blank=True, null=True)
-    length_side_C_option_2 = models.FloatField(blank=True, null=True)
-    length_side_D_option_2 = models.FloatField(blank=True, null=True)
+    front_side = models.CharField(max_length=100, blank=True, null=True)
+    right_side = models.CharField(max_length=100, blank=True, null=True)
+    back_side = models.CharField(max_length=100, blank=True, null=True)
+    left_side = models.CharField(max_length=100, blank=True, null=True)
+    distance_tower_front = models.CharField(max_length=100, blank=True, null=True)
+    distance_tower_right = models.CharField(max_length=100, blank=True, null=True)
+    distance_tower_back = models.CharField(max_length=100, blank=True, null=True)
+    distance_tower_left = models.CharField(max_length=100, blank=True, null=True)
+    length_side_A_option_1 = models.CharField(max_length=100, blank=True, null=True)
+    length_side_B_option_1 = models.CharField(max_length=100, blank=True, null=True)
+    length_side_C_option_1 = models.CharField(max_length=100, blank=True, null=True)
+    length_side_D_option_1 = models.CharField(max_length=100, blank=True, null=True)
+    length_side_A_option_2 = models.CharField(max_length=100, blank=True, null=True)
+    length_side_B_option_2 = models.CharField(max_length=100, blank=True, null=True)
+    length_side_C_option_2 = models.CharField(max_length=100, blank=True, null=True)
+    length_side_D_option_2 = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return "SiteDimensionDetails object " + str(self.id)

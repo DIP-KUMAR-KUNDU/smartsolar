@@ -1,22 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
-        integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
-        crossorigin="anonymous"></script>
+<head>
 
     <title>Solar Feasibility Site Survey Report of {{sitevisit.site.site_id}} of {{ sitevisit.visited|date:"d/m/Y" }}
         {{ sitevisit.visited|date:"h:i A" }}</title>
-    
-        <meta charset="UTF-8">
 
-    <style>
+    <meta charset="UTF-8">
+
+     <style>
+         
         .main_div {
+           /* height:842pt ;
+            width:595px;*/
+           
             text-align: center;
-            margin: 20px;
-            padding: 20px;
+             width: 100%;
         }
 
         .border_div {
@@ -67,10 +67,16 @@
             display: inline-block;
             text-align: left;
         }
-    </style>
+    </style> 
 </head>
 
-<body id="targetPDF">
+<body>
+<div id="targetPDF" style="width: 14cm; margin:0 auto;" >
+ 
+
+
+
+    
     <div class="main_div">
         <div>
             <img src="/media/atc-logo.png" height="80" width="160" />
@@ -311,6 +317,7 @@
                 </tbody>
             </table>
         </div>
+        <h1 style='page-break-before: always'>test-break</h1>
         <div class="left_text">
             <h3>2. DC Supply parameter</h3>
         </div>
@@ -814,8 +821,9 @@
             </div>
         </div>
     </div>
-</body>
 
+
+<!--
 <script>
     window.print();
     window.onafterprint = () => {
@@ -823,6 +831,47 @@
         window.close();
      }
 </script>
+-->
+
+
+
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+    integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+    crossorigin="anonymous"></script>
+
+
+
+
+    <script>
+		
+
+        var pdf = new jsPDF('p', 'pt', 'a4');
+    
+        pdf.html(document.getElementById('targetPDF'), {
+    
+            callback: function (pdf) {
+                var iframe = document.createElement('iframe');
+                iframe.setAttribute('style', 'position:absolute;right:0; top:0; bottom:0; height:100%; width:500px');
+                document.body.appendChild(iframe);
+                iframe.src = pdf.output('datauristring');
+            }
+        });
+             
+    
+</script>
+
+
+
+</body>
+
 
 
 </html>

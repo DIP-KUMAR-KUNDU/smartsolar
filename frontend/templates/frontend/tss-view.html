@@ -102,10 +102,10 @@
                 </li>
                 <li class="nav-item">
                   <a href="tssassign?task=TSS Entry" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>TSS Entry</p>
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>TSS Entry</p>
                   </a>
-              </li>
+                </li>
               </ul>
             </li>
 
@@ -194,7 +194,6 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>Visit ID</th>
                       <th>Site ID</th>
                       <th>Visit Date</th>
                       <th>Report Status Stage</th>
@@ -204,17 +203,35 @@
                   <tbody>
                     {% for sv in sitevisit %}
                     <tr>
-                      <td><a href="pages/examples/invoice.html">{{ sv.id }}</a></td>
                       <td>{{ sv.site.site_id }}</td>
                       <td>
                         <div class="sparkbar" data-color="#00a65a" data-height="20">{{ sv.visited }}</div>
                       </td>
-                      <td>{{ sv.status_stage }}</td>
                       <td>
-                        <a target="_blank" href="tss-view-pdf?id={{ sv.id }}" class="btn btn-primary">View and
-                          Download</a>
-                          <br><br>
-                        <a href="tss-edit?id={{ sv.id }}" target="_blank" class="btn btn-primary">Edit</a>
+                        <select onchange=status_stage_Event(this) name="status_stage" required>
+                          <option value="1{{sv.id}}" {% if sv.status_stage == 1 %} selected {% endif %}>1
+                          </option>
+                          <option value="2{{sv.id}}" {% if sv.status_stage == 2 %} selected {% endif %}>2
+                          </option>
+                          <option value="3{{sv.id}}" {% if sv.status_stage == 3 %} selected {% endif %}>3
+                          </option>
+                          <option value="4{{sv.id}}" {% if sv.status_stage == 4 %} selected {% endif %}>4
+                          </option>
+                          <option value="5{{sv.id}}" {% if sv.status_stage == 5 %} selected {% endif %}>5
+                          </option>
+                          <option value="6{{sv.id}}" {% if sv.status_stage == 6 %} selected {% endif %}>6
+                          </option>
+                          <option value="7{{sv.id}}" {% if sv.status_stage == 7 %} selected {% endif %}>7
+                          </option>
+                          <option value="8{{sv.id}}" {% if sv.status_stage == 8 %} selected {% endif %}>8
+                          </option>
+                        </select>
+                      </td>
+                      <td>
+                        <a target="_blank" href="tss-view-pdf?id={{ sv.id }}" class="btn btn-primary">View <i
+                            class="fa fa-download" aria-hidden="true"></i></a>
+                        <a href="tss-edit?id={{ sv.id }}" target="_blank" class="btn btn-primary"><i class="fa fa-edit"
+                            aria-hidden="true"></i></a>
                       </td>
                     </tr>
                     {% endfor %}
@@ -288,6 +305,22 @@
       });
     });
   </script>
+
+
+  <script>
+    const status_stage_Event = (elem) => {
+        const xhr = new XMLHttpRequest ();
+        xhr.open('GET', `/tss-status-edit?status_stage=${elem.value.charAt(0)}&visit_id=${elem.value.slice(1)}`, true);
+        xhr.onload = () => {
+        if (this.status == 400) {
+          location.reload();
+        }
+      }
+      xhr.send();
+    }
+  </script>
+
+
 </body>
 
 </html>
