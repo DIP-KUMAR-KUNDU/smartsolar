@@ -75,7 +75,7 @@ admin.site.register(SiteDimensionDetails, SiteDimensionDetailsAdmin)
 
 
 class GeographicalDetailsAdmin(admin.ModelAdmin):
-    list_display = ("id"
+    list_display = ("id", 'site'
 ,"sketch_1"
 ,"sketch_2"
 ,"sketch_3"
@@ -83,11 +83,20 @@ class GeographicalDetailsAdmin(admin.ModelAdmin):
 admin.site.register(GeographicalDetails, GeographicalDetailsAdmin)
 
 
+class FormPhotosAdmin(admin.ModelAdmin):
+    list_display = ("id", 'site'
+,"form_1"
+,"form_2"
+,"form_3"
+,"form_4", "form_5")
+admin.site.register(FormPhotos, FormPhotosAdmin)
 
-class SupportingImagesGeographicalAdmin(admin.ModelAdmin):
-    list_display = ('id', 'geographicaldetails', 'supporting_images', 'supporting_images_caption')
-    list_display_links = ('id', 'geographicaldetails', 'supporting_images', 'supporting_images_caption')
-admin.site.register(SupportingImagesGeographical, SupportingImagesGeographicalAdmin)
+
+
+class SiteVisitImagePoolAdmin(admin.ModelAdmin):
+    list_display = ('id', 'sitevisit', 'supporting_images')
+    list_display_links = ('id', 'sitevisit', 'supporting_images')
+admin.site.register(SiteVisitImagePool, SiteVisitImagePoolAdmin)
 
 
 

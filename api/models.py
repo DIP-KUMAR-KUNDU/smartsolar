@@ -41,13 +41,13 @@ class SiteMaster(models.Model):
 
 class ContractMaster(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    contractor = models.CharField(max_length=100)
+    contractor = models.CharField(max_length=100, blank=True, null=True)
     contractor_rep = models.CharField(
         verbose_name="Names of Contractor Rep",
-        max_length=100)
+        max_length=100, blank=True, null=True)
     contact_contractor_rep = models.CharField(
         verbose_name="Contact of Contractor Rep",
-        max_length=13)
+        max_length=13, blank=True, null=True)
     
     class Meta:
         unique_together = ('contractor', 'contractor_rep', 'contact_contractor_rep')
@@ -137,38 +137,75 @@ class SiteDimensionDetails(models.Model):
         return "SiteDimensionDetails object " + str(self.id)
 
 
+
+def site_id_directory_path_for_geographical_details(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return '{0}/geographical_image/{1}'.format(instance.site.site_id, filename)
+
+
+
 class GeographicalDetails(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    sketch_1 = models.ImageField(blank=True, null=True)
-    sketch_2 = models.ImageField(blank=True, null=True)
-    sketch_3 = models.ImageField(blank=True, null=True)
-    sketch_4 = models.ImageField(blank=True, null=True)
+    site = models.ForeignKey(SiteMaster, on_delete=models.CASCADE, null=True, blank=True)
+    sketch_1 = models.ImageField(upload_to=site_id_directory_path_for_geographical_details, blank=True, null=True)
+    sketch_2 = models.ImageField(upload_to=site_id_directory_path_for_geographical_details, blank=True, null=True)
+    sketch_3 = models.ImageField(upload_to=site_id_directory_path_for_geographical_details, blank=True, null=True)
+    sketch_4 = models.ImageField(upload_to=site_id_directory_path_for_geographical_details, blank=True, null=True)
 
     def __str__(self):
         return "GeographicalDetails object " + str(self.id)
 
 
-class SupportingImagesGeographical(models.Model):
+
+def site_id_directory_path_for_form_details(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return '{0}/form_image/{1}'.format(instance.site.site_id, filename)
+
+
+class FormPhotos(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    geographicaldetails = models.ForeignKey(GeographicalDetails, on_delete=models.CASCADE)
-    supporting_images = models.ImageField()
-    supporting_images_caption = models.CharField(max_length=300)
+    site = models.ForeignKey(SiteMaster, on_delete=models.CASCADE, null=True, blank=True)
+    form_1 = models.ImageField(upload_to=site_id_directory_path_for_form_details, blank=True, null=True)
+    form_2 = models.ImageField(upload_to=site_id_directory_path_for_form_details, blank=True, null=True)
+    form_3 = models.ImageField(upload_to=site_id_directory_path_for_form_details, blank=True, null=True)
+    form_4 = models.ImageField(upload_to=site_id_directory_path_for_form_details, blank=True, null=True)
+    form_5 = models.ImageField(upload_to=site_id_directory_path_for_form_details, blank=True, null=True)
+
+    def __str__(self):
+        return "FormPhotos object " + str(self.id)
+
 
 
 
 class SiteVisit(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    site = models.ForeignKey(SiteMaster, on_delete=models.CASCADE)
-    contract = models.ForeignKey(ContractMaster, on_delete=models.CASCADE)
-    details = models.ForeignKey(SiteDetails, on_delete=models.CASCADE)
-    dcsupply = models.ForeignKey(DCSupplyParameter, on_delete=models.CASCADE)
-    dimension = models.ForeignKey(SiteDimensionDetails, on_delete=models.CASCADE)
-    geography = models.ForeignKey(GeographicalDetails, on_delete=models.CASCADE)
+    site = models.ForeignKey(SiteMaster, on_delete=models.CASCADE, blank=True, null=True)
+    contract = models.ForeignKey(ContractMaster, on_delete=models.CASCADE, blank=True, null=True)
+    details = models.ForeignKey(SiteDetails, on_delete=models.CASCADE, blank=True, null=True)
+    dcsupply = models.ForeignKey(DCSupplyParameter, on_delete=models.CASCADE, blank=True, null=True)
+    dimension = models.ForeignKey(SiteDimensionDetails, on_delete=models.CASCADE, blank=True, null=True)
+    geography = models.ForeignKey(GeographicalDetails, on_delete=models.CASCADE, blank=True, null=True)
+    form = models.ForeignKey(FormPhotos, on_delete=models.CASCADE, blank=True, null=True)
     visited = models.DateTimeField(default=timezone.now, unique=True)
     status_stage = models.SmallIntegerField(default=4)
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
 
-    class Meta:
-        unique_together = ('site', 'contract', 'details', 'dcsupply', 'dimension', 'geography')
+
+
+def site_id_directory_path_for_image_pool(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return '{0}/image_pool/{1}'.format(instance.sitevisit.site.site_id, filename)
+
+
+
+class SiteVisitImagePool(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    sitevisit = models.ForeignKey(SiteVisit, on_delete=models.CASCADE, blank=True, null=True)
+    supporting_images = models.ImageField(upload_to=site_id_directory_path_for_image_pool)
+
+
+
 
 
 class AssignUser(models.Model):

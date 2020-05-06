@@ -615,11 +615,11 @@ def tssEdit(request):
             dcsupply.load_current_2=load_current_2 if load_current_2 != '' else None
             dcsupply.load_current_3=load_current_3 if load_current_3 != '' else None
             dcsupply.load_current_4=load_current_4 if load_current_4 != '' else None
-            dcsupply.system_voltage_comment=system_voltage_comment if system_voltage != '' else None
-            dcsupply.load_current_1_comment=load_current_1_comment if load_current_1 != '' else None
-            dcsupply.load_current_2_comment=load_current_2_comment if load_current_2 != '' else None
-            dcsupply.load_current_3_comment=load_current_3_comment if load_current_3 != '' else None
-            dcsupply.load_current_4_comment=load_current_4_comment if load_current_4 != '' else None
+            dcsupply.system_voltage_comment=system_voltage_comment if system_voltage_comment != '' else None
+            dcsupply.load_current_1_comment=load_current_1_comment if load_current_1_comment != '' else None
+            dcsupply.load_current_2_comment=load_current_2_comment if load_current_2_comment != '' else None
+            dcsupply.load_current_3_comment=load_current_3_comment if load_current_3_comment != '' else None
+            dcsupply.load_current_4_comment=load_current_4_comment if load_current_4_comment != '' else None
             dcsupply.save()
             
             dimension.front_side=front_side if front_side != '' else None
@@ -640,11 +640,15 @@ def tssEdit(request):
             dimension.length_side_D_option_2=length_side_D_option_2 if length_side_D_option_2 != '' else None
             dimension.save()
 
-            location=settings.MEDIA_ROOT + '/' + sitevisit.site.site_id + '/' + 'geographical_sketch'
+            location=settings.DEFAULT_FILE_STORAGE + '/' + sitevisit.site.site_id + '/' + 'geographical_sketch'
+            print(settings.DEFAULT_FILE_STORAGE)
+            print(location)
             fs=FileSystemStorage(location=location)
 
             if sketch_1 != None:
+                print("ok")
                 sketch_1=fs.save(sketch_1.name, sketch_1)
+                print("ok")
                 try:
                     Image.open(location + '/' + sketch_1).verify()
                     geography.sketch_1.save(sketch_1, File(open(location + '/' + sketch_1, 'rb')))

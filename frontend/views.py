@@ -15,6 +15,7 @@ import datetime
 # Create your views here.
 
 
+#Login
 @csrf_protect
 def loginSmart(request):
     from django.contrib.auth import authenticate, login
@@ -42,16 +43,21 @@ def loginSmart(request):
     return render(request, 'frontend/login.html', wrongUser)
 
 
+#DashBoard
 @login_required(login_url='/')
 def indexSmart(request):
     return render(request, 'frontend/index.html', {"activepage": "index"})
 
 
+
+#Unnecessary
 @login_required(login_url='/')
 def blankSmart(request):
     return render(request, 'frontend/blank.html')
 
 
+
+#TSS view Table Here we can also change TSS Stage Status
 @login_required(login_url='/')
 def tssViewSmart(request):
     try:
@@ -70,6 +76,9 @@ def tssViewSmart(request):
         return bad_request(request, ex)
 
 
+
+
+#TSS PDF 
 @login_required(login_url='/')
 def tssViewSmartPDF(request):
     try:
@@ -83,6 +92,9 @@ def tssViewSmartPDF(request):
         return bad_request(request, ex)
 
 
+
+
+#Site Distribution according to Company users
 @csrf_protect
 @login_required(login_url='/')
 def tssAssign(request):
@@ -125,6 +137,7 @@ def tssAssign(request):
 
 
 
+#TSS Entry as discussed previously
 @csrf_protect
 @login_required(login_url='/')
 def tssEntrySmart(request):
@@ -138,6 +151,8 @@ def tssEntrySmart(request):
 
 
 
+
+#TSS Edit By helper function
 @csrf_protect
 @login_required(login_url='/')
 def tssUpdateSmart(request):
@@ -150,6 +165,34 @@ def tssUpdateSmart(request):
 
 
 
+#BY SHANTANU (MEANINGLESS till now because there is no link mapping)
+@login_required(login_url='/')
+def siteSetup(request):
+    try:
+        return render(request, 'frontend/site_setup.html')
+    except Exception as ex:
+        print(ex)
+        return bad_request(request, ex)
+
+
+#Site Entry AJAX CALL In Site Setup (Incomplete)
+@login_required(login_url='/')
+def siteSetupSiteEntry(request): 
+    try:
+        if request.method == 'POST':
+            # from django.http import JsonResponse
+            #Code to Create SiteVisit Object with foreign Key SiteMaster
+            #return JsonResponse with SiteVisit Object & status 200
+            return HttpResponse(status=200)
+    except Exception as ex:
+        print(ex)
+        return HttpResponse(status=400)
+
+
+
+
+
+#TSS status Stage updatevia AJAX call with get method
 @login_required(login_url='/')
 def tssStatusUpdateSmart(request):
     try:
@@ -170,6 +213,8 @@ def tssStatusUpdateSmart(request):
 
 
 
+
+#Logout from Site for non admin users
 @login_required(login_url='/')
 def logOutSmart(request):
     from django.contrib.auth import logout
